@@ -106,7 +106,7 @@ if want draw; then
     # a copy of the tests alone, so they import the installed app
     mkdir -p "$WORK/draw"; cp -r "$DRAW_SRC/tests" "$WORK/draw/"; DT="$WORK/draw"
   fi
-  for t in ui_audit deep_audit dialog_audit tools_audit; do
+  for t in ui_audit deep_audit dialog_audit tools_audit theme_audit; do
     run "Draw $t" bash -c "cd '$DT' && AUDIT_OUT='$WORK/draw-out' timeout 900 python3 -u tests/$t.py"
   done
 fi
