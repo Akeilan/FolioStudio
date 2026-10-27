@@ -1,6 +1,6 @@
 #!/bin/bash
-# Builds the Folio Suite installer: one file that installs Sheets, Draw and Gable (and Writer
-# when its package is in the folder) through a local apt repository, so later versions arrive
+# Builds the Folio Suite installer: one file that installs Writer, Sheets, Draw, Gable and
+# Deliver through a local apt repository, so later versions arrive
 # through the normal Software Updater.
 #
 #   packaging/build-suite.sh <folder with the app .debs> [output folder]
@@ -29,13 +29,13 @@ newest() {   # newest .deb of a package in $DEBS
 REPO="$WORK/payload/repo"
 mkdir -p "$REPO"
 DEPENDS=()
-for p in folio-sheets folio-draw folio-gable folio-writer; do
+for p in folio-sheets folio-draw folio-gable folio-writer folio-deliver; do
   f="$(newest $p)"
   if [ -n "$f" ]; then
     cp "$f" "$REPO/"
     DEPENDS+=("$p (>= $(dpkg-deb -f "$f" Version))")
     echo "  $(basename "$f")"
-  elif [ "$p" != folio-writer ]; then
+  elif [ "$p" != folio-writer ] && [ "$p" != folio-deliver ]; then
     echo "missing $p in $DEBS" >&2; exit 1
   fi
 done
@@ -52,9 +52,10 @@ Priority: optional
 Architecture: all
 Maintainer: Ron Shillings <ron.shillings@gmail.com>
 Depends: $DEP
-Description: Folio office suite: Writer, Sheets, Draw and Gable
+Description: Folio office suite: Writer, Sheets, Deliver, Draw and Gable
  Installs the Folio apps together: Folio Writer (word processor), Folio Sheets
- (spreadsheet), Folio Draw (pictures) and Folio Gable (3D modelling). Updates come from
+ (spreadsheet), Folio Deliver (presentations), Folio Draw (pictures) and Folio Gable
+ (3D modelling). Updates come from
  the suite's local repository through the normal Software Updater.
 CTL
 cat > "$M/DEBIAN/postrm" <<'SH'
