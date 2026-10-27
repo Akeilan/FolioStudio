@@ -6,8 +6,9 @@ REPO=/var/lib/folio-suite/repo
 KEY=/usr/share/keyrings/folio-suite-archive-keyring.gpg
 LIST=/etc/apt/sources.list.d/folio-suite.list
 if [ "$1" = "--remove" ]; then
-  apt-get -y purge folio-suite folio-sheets folio-draw folio-gable folio-writer 2>/dev/null || \
-    apt-get -y purge folio-suite folio-sheets folio-draw folio-gable
+  for p in folio-suite folio-writer folio-sheets folio-deliver folio-draw folio-gable; do
+    dpkg -s "$p" >/dev/null 2>&1 && apt-get -y purge "$p" || true
+  done
   rm -f "$LIST" "$KEY"
   rm -rf /var/lib/folio-suite
   apt-get update -qq || true
@@ -23,11 +24,15 @@ mv "$REPO.new" "$REPO"
 chmod -R a+rX /var/lib/folio-suite
 install -m 644 "$HERE/folio-suite-archive-keyring.gpg" "$KEY"
 echo "deb [signed-by=$KEY] file:$REPO ./" > "$LIST"
+if ! command -v gpgv >/dev/null 2>&1 && ! command -v gpgv2 >/dev/null 2>&1; then
+  echo "The package signature checker (gpgv) is missing: sudo apt install gpgv, then run this again." >&2
+  exit 1
+fi
 apt-get update -o Dir::Etc::sourcelist="$LIST" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" -qq
 if [ "$1" = "--repo-only" ]; then
   echo "Repository updated; the Software Updater will offer the new versions."
   exit 0
 fi
 echo "Installing..."
-DEBIAN_FRONTEND=noninteractive apt-get install -y folio-suite folio-sheets folio-draw folio-gable
-echo "Folio Suite installed: Sheets, Draw and Gable are in the app menu."
+DEBIAN_FRONTEND=noninteractive apt-get install -y folio-suite
+echo "Folio Suite installed: Writer, Sheets, Deliver, Draw and Gable are in the app menu."
