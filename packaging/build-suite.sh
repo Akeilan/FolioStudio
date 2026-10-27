@@ -52,10 +52,10 @@ Priority: optional
 Architecture: all
 Maintainer: Ron Shillings <ron.shillings@gmail.com>
 Depends: $DEP
-Description: Folio office suite: Sheets, Draw and Gable
- Installs the Folio apps together: Folio Sheets (spreadsheet), Folio Draw (pictures) and
- Folio Gable (3D modelling). Updates come from the suite's local repository through the
- normal Software Updater.
+Description: Folio office suite: Writer, Sheets, Draw and Gable
+ Installs the Folio apps together: Folio Writer (word processor), Folio Sheets
+ (spreadsheet), Folio Draw (pictures) and Folio Gable (3D modelling). Updates come from
+ the suite's local repository through the normal Software Updater.
 CTL
 cat > "$M/DEBIAN/postrm" <<'SH'
 #!/bin/sh
