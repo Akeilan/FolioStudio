@@ -108,6 +108,7 @@ RUN="$OUT/folio-suite-${VERSION}-installer.run"
 #   --remove      take the suite off again
 #   --repo-only   update the local repository without installing (the Software Updater
 #                 then offers the new versions)
+#   --old-formats also install LibreOffice's converter for old file formats (not needed otherwise)
 set -e
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT

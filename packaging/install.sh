@@ -34,5 +34,12 @@ if [ "$1" = "--repo-only" ]; then
   exit 0
 fi
 echo "Installing..."
-DEBIAN_FRONTEND=noninteractive apt-get install -y folio-suite
+# X2-03: no LibreOffice unless asked for. The apps read and write their own formats natively;
+# --old-formats adds LibreOffice's converter (no window of its own) for .doc, .xls, .ppt and
+# OpenDocument files the apps don't read themselves.
+EXTRA=""
+for a in "$@"; do
+  [ "$a" = "--old-formats" ] && EXTRA="libreoffice-writer-nogui libreoffice-calc-nogui libreoffice-impress-nogui"
+done
+DEBIAN_FRONTEND=noninteractive apt-get install -y -o APT::Install-Suggests=0 folio-suite $EXTRA
 echo "Folio Suite installed: Writer, Sheets, Deliver, Post, Draw and Gable are in the app menu."
