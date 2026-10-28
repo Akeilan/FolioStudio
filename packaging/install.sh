@@ -6,7 +6,7 @@ REPO=/var/lib/folio-suite/repo
 KEY=/usr/share/keyrings/folio-suite-archive-keyring.gpg
 LIST=/etc/apt/sources.list.d/folio-suite.list
 if [ "$1" = "--remove" ]; then
-  for p in folio-suite folio-writer folio-sheets folio-deliver folio-draw folio-gable; do
+  for p in folio-suite folio-writer folio-sheets folio-deliver folio-post folio-draw folio-gable; do
     dpkg -s "$p" >/dev/null 2>&1 && apt-get -y purge "$p" || true
   done
   rm -f "$LIST" "$KEY"
@@ -35,4 +35,4 @@ if [ "$1" = "--repo-only" ]; then
 fi
 echo "Installing..."
 DEBIAN_FRONTEND=noninteractive apt-get install -y folio-suite
-echo "Folio Suite installed: Writer, Sheets, Deliver, Draw and Gable are in the app menu."
+echo "Folio Suite installed: Writer, Sheets, Deliver, Post, Draw and Gable are in the app menu."
