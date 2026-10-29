@@ -38,3 +38,12 @@ failures; the exit code is 0 only when all passed.
 `shared/ribbon.py` and `shared/fontfix.py`, and `tests/themecheck.py`, are the one copy of code
 several apps carry. `tools/sync_shared.sh` copies them into the apps; `--check` fails when an app's
 copy differs.
+
+## Releases
+
+Each app's release run lives in its repository as `tools/release.sh` (Sheet: `tools/release_installed.sh`
+after its source tests). A run builds the app, runs its tests from source, builds the .deb and tests
+the installed package on the release test machines: chroots of Ubuntu 22.04 (`/srv/jammy`), 22.04
+without LibreOffice (`/srv/nolo`) and 24.04 (`/srv/noble`), each with an Xvfb display, plus a Wayland
+pass on 24.04 through `tests/wl.sh`. `tools/mounts.sh` prepares the chroots. The suite itself is built
+with `packaging/build-suite.sh <folder of debs> <output folder>`.
