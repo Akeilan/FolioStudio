@@ -1,7 +1,23 @@
-# Folio Suite
+# Folio Studio
 
-Things that span the apps: one command for every app's tests, the suite package and its
-local apt repository.
+Folio Studio (formerly Folio Suite) is the six Folio apps together: Folio Page (word processor,
+formerly Writer), Folio Sheet (spreadsheet, formerly Sheets), Folio Show (presentations, formerly
+Deliver), Folio Post (mail and calendar), Folio Draw (pictures and embroidery) and Folio Gable (3D
+modelling). This repository holds what spans the apps: the installer and its local apt
+repository, one command for every app's tests, and the code the apps share.
+
+## Install
+
+```
+sh folio-studio-<version>-installer.run              # install or update everything
+sh folio-studio-<version>-installer.run --old-formats  # also LibreOffice's converter for old formats
+sh folio-studio-<version>-installer.run --repo-only    # only refresh the local repository
+sh folio-studio-<version>-installer.run --remove       # take it all off again
+```
+
+An existing Folio Suite install is moved over: the old repository and key are replaced, and the
+old package names (folio-suite, folio-writer, folio-sheets, folio-deliver) become transitional
+packages, so the old commands keep working.
 
 ## Tests
 
@@ -9,9 +25,16 @@ local apt repository.
 ./run-tests.sh              # the installed apps, with the test scripts from their source trees
 ./run-tests.sh --source     # the source trees, engines' unit tests included
 ./run-tests.sh --quick --only gable,suite
+tests/machines.sh           # run-tests.sh on every release test machine (22.04, 22.04 without LibreOffice, 24.04)
+tests/wl.sh CMD...          # run a test as a Wayland client (Weston inside the Xvfb)
 ```
 
-Set `SHEETS_SRC`, `DRAW_SRC` and `GABLE_SRC` if the sources aren't in `~/src`. A summary table
-lists every test file with its number of checks and failures; the exit code is 0 only when all
-passed. `tests/clipboard_chain.sh` copies Gable's view into Draw, Draw's picture into Sheets,
-and checks the HTML table a Sheets range offers other programs.
+Set `WRITER_SRC`, `SHEETS_SRC`, `DELIVER_SRC`, `POST_SRC`, `DRAW_SRC` and `GABLE_SRC` if the
+sources aren't in `~/src`. A summary table lists every test file with its number of checks and
+failures; the exit code is 0 only when all passed.
+
+## Shared code
+
+`shared/ribbon.py` and `shared/fontfix.py`, and `tests/themecheck.py`, are the one copy of code
+several apps carry. `tools/sync_shared.sh` copies them into the apps; `--check` fails when an app's
+copy differs.

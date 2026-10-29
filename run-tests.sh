@@ -1,7 +1,7 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Writer, Sheets, Deliver, Post, Draw, Gable) with the test
+#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
@@ -79,13 +79,13 @@ run() {   # name, then the command
 
 echo "Folio suite tests ($([ $SOURCE = 1 ] && echo "source trees" || echo "installed apps")), display $DISPLAY"
 
-# ---------------------------------------------------------------- Writer
+# ---------------------------------------------------------------- Page (formerly Writer)
 if want writer; then
   if [ $SOURCE = 1 ]; then
-    run "Writer engine (Rust)" bash -c "cd '$WRITER_SRC/core' && cargo test --release --lib"
+    run "Page engine (Rust)" bash -c "cd '$WRITER_SRC/core' && cargo test --release --lib"
     WCMD="env FOLIO_SHARE=$WRITER_SRC/share PYTHONPATH=$WRITER_SRC/app python3 -m folio"
   else
-    WCMD="folio-writer"
+    WCMD="$(command -v folio-page || command -v folio-writer)"
   fi
   for t in "$WRITER_SRC"/tests/native/n*.py; do
     [ -f "$t" ] || continue
@@ -93,12 +93,12 @@ if want writer; then
     (cd "$WORK" && FOLIO_ENGINE=native FOLIO_WRITER_TESTS="$WRITER_SRC/tests" FOLIO_TEST_SCRIPT="$t" timeout 300 $WCMD >/dev/null 2>&1); rc=$?
     n=$(grep -cE '^(PASS|FAIL)' /tmp/ftest.log 2>/dev/null); f=$(grep -cE '^(FAIL|ERROR)' /tmp/ftest.log 2>/dev/null)
     [ $rc -ne 0 ] && [ "${f:-0}" = "0" ] && f="error"
-    row "Writer $(basename "$t" .py)" "${n:-0}" "${f:-error}"
-    [ "$f" != "0" ] && grep -E '^(FAIL|ERROR)' /tmp/ftest.log 2>/dev/null | head -5 | sed "s/^/  [Writer $(basename "$t" .py)] /" >&2
+    row "Page $(basename "$t" .py)" "${n:-0}" "${f:-error}"
+    [ "$f" != "0" ] && grep -E '^(FAIL|ERROR)' /tmp/ftest.log 2>/dev/null | head -5 | sed "s/^/  [Page $(basename "$t" .py)] /" >&2
   done
 fi
 
-# ---------------------------------------------------------------- Deliver and Post (UI scripts print ok / FAIL lines)
+# ---------------------------------------------------------------- Show (formerly Deliver) and Post (UI scripts print ok / FAIL lines)
 ui_app() {  # label, runner script, test dir, scripts...
   local label="$1" runner="$2" dir="$3"; shift 3
   for u in "$@"; do
@@ -113,20 +113,20 @@ ui_app() {  # label, runner script, test dir, scripts...
 }
 if want deliver; then
   if [ $SOURCE = 1 ]; then R="$DELIVER_SRC/tests/run_ui.sh"; else R="$DELIVER_SRC/tests/run_installed.sh"; fi
-  ui_app Deliver "$R" "$DELIVER_SRC/tests" ui_basic.py ui_more.py ui_anim.py ui_review.py ui_master.py ui_show2.py ui_objects.py ui_media.py ui_theme.py
+  ui_app Show "$R" "$DELIVER_SRC/tests" ui_basic.py ui_more.py ui_anim.py ui_review.py ui_master.py ui_show2.py ui_objects.py ui_media.py ui_theme.py
 fi
 if want post; then
   if [ $SOURCE = 1 ]; then R="$POST_SRC/tests/run_ui.sh"; else R="$POST_SRC/tests/run_installed.sh"; fi
   ui_app Post "$R" "$POST_SRC/tests" ui_mail.py ui_editor.py ui_writered.py ui_attach.py ui_calendar.py ui_people.py ui_tasks.py ui_folders.py ui_pgp.py ui_smime.py
 fi
 
-# ---------------------------------------------------------------- Sheets
+# ---------------------------------------------------------------- Sheet (formerly Sheets)
 if want sheets; then
   if [ $SOURCE = 1 ]; then
     PP="$SHEETS_SRC/app"
-    run "Sheets engine (Rust)" bash -c "cd '$SHEETS_SRC/engine' && cargo test --no-default-features --lib"
+    run "Sheet engine (Rust)" bash -c "cd '$SHEETS_SRC/engine' && cargo test --no-default-features --lib"
   else
-    PP=/usr/lib/folio-sheets
+    PP=/usr/lib/folio-sheet; [ -d "$PP" ] || PP=/usr/lib/folio-sheets
   fi
   for t in "$SHEETS_SRC"/tests/*_audit.py "$SHEETS_SRC"/tests/command_walk.py; do
     [ -f "$t" ] || continue
@@ -134,10 +134,10 @@ if want sheets; then
       # the walk reports only callback errors
       out=$(cd "$WORK" && FOLIO_TEST_SCRIPT="$t" PYTHONPATH="$PP" timeout 600 python3 -m folio_sheets 2>&1)
       e=$(echo "$out" | grep -oE 'ERRORS IN CALLBACKS: [0-9]+' | awk '{print $4}')
-      row "Sheets command_walk" "-" "${e:-error}"
+      row "Sheet command_walk" "-" "${e:-error}"
       continue
     fi
-    run "Sheets $(basename "$t" .py)" bash -c "cd '$WORK' && FOLIO_TEST_SCRIPT='$t' PYTHONPATH='$PP' timeout 600 python3 -m folio_sheets"
+    run "Sheet $(basename "$t" .py)" bash -c "cd '$WORK' && FOLIO_TEST_SCRIPT='$t' PYTHONPATH='$PP' timeout 600 python3 -m folio_sheets"
   done
 fi
 
