@@ -11,6 +11,7 @@ declare -A RIBBON=(
   [folio-sheets]=app/folio_sheets/ribbon.py
   [folio-deliver]=app/folio_deliver/ribbon.py
   [foliopost]=app/folio_post/ribbon.py
+  [folio-draw]=folio_draw/suiteribbon.py
 )
 declare -A PKG=(
   [folio-writer]=app/folio
