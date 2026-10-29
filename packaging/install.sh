@@ -21,7 +21,16 @@ if [ "$1" = "--remove" ]; then
   echo "Folio Studio removed."
   exit 0
 fi
+# Where updates come from: the online package source (published with each release), so the
+# Software Updater offers new versions without another installer. The installer's own copy
+# installs this version, so installing works offline too. FOLIO_STUDIO_SOURCE overrides the
+# address (tests); "local" keeps the old on-disk repository only.
+SOURCE="${FOLIO_STUDIO_SOURCE:-$(cat "$HERE/source-url" 2>/dev/null || echo local)}"
 echo "Setting up the Folio Studio repository..."
+if ! command -v gpgv >/dev/null 2>&1 && ! command -v gpgv2 >/dev/null 2>&1; then
+  echo "The package signature checker (gpgv) is missing: sudo apt install gpgv, then run this again." >&2
+  exit 1
+fi
 mkdir -p /var/lib/folio-studio
 rm -rf "$REPO.new"
 cp -r "$HERE/repo" "$REPO.new"
@@ -29,18 +38,28 @@ rm -rf "$REPO"
 mv "$REPO.new" "$REPO"
 chmod -R a+rX /var/lib/folio-studio
 install -m 644 "$HERE/folio-studio-archive-keyring.gpg" "$KEY"
-echo "deb [signed-by=$KEY] file:$REPO ./" > "$LIST"
 # the Folio Suite repository this replaces
 if [ -f "$OLD_LIST" ] || [ -d "$OLD_REPO" ]; then
   rm -f "$OLD_LIST" "$OLD_KEY"
   rm -rf "$OLD_REPO"
 fi
-if ! command -v gpgv >/dev/null 2>&1 && ! command -v gpgv2 >/dev/null 2>&1; then
-  echo "The package signature checker (gpgv) is missing: sudo apt install gpgv, then run this again." >&2
-  exit 1
-fi
+# first this installer's own copy, then (below) the online source
+echo "deb [signed-by=$KEY] file:$REPO ./" > "$LIST"
 apt-get update -o Dir::Etc::sourcelist="$LIST" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" -qq
+online() {
+  [ "$SOURCE" = local ] && return 0
+  echo "deb [signed-by=$KEY] $SOURCE ./" > "$LIST"
+  if apt-get update --error-on=any -o Dir::Etc::sourcelist="$LIST" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" -qq; then
+    rm -rf "$REPO"
+    echo "Updates now come from $SOURCE through the Software Updater."
+  else
+    # offline: keep the local copy as well, so apt still finds what is installed
+    { echo "deb [signed-by=$KEY] $SOURCE ./"; echo "deb [signed-by=$KEY] file:$REPO ./"; } > "$LIST"
+    echo "Couldn't reach $SOURCE now; the Software Updater will use it once you're online." >&2
+  fi
+}
 if [ "$1" = "--repo-only" ]; then
+  online
   echo "Repository updated; the Software Updater will offer the new versions."
   exit 0
 fi
@@ -58,4 +77,5 @@ for p in folio-suite folio-writer folio-sheets folio-deliver; do
   dpkg -s "$p" >/dev/null 2>&1 && UPGRADE="$UPGRADE $p"
 done
 DEBIAN_FRONTEND=noninteractive apt-get install -y -o APT::Install-Suggests=0 folio-studio $UPGRADE $EXTRA
+online
 echo "Folio Studio installed: Page, Sheet, Show, Post, Draw and Gable are in the app menu."

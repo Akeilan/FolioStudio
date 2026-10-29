@@ -3,7 +3,7 @@
 Folio Studio (formerly Folio Suite) is the six Folio apps together: Folio Page (word processor,
 formerly Writer), Folio Sheet (spreadsheet, formerly Sheets), Folio Show (presentations, formerly
 Deliver), Folio Post (mail and calendar), Folio Draw (pictures and embroidery) and Folio Gable (3D
-modelling). This repository holds what spans the apps: the installer and its local apt
+modelling). This repository holds what spans the apps: the installer and its signed apt
 repository, one command for every app's tests, and the code the apps share.
 
 ## Install
@@ -11,13 +11,18 @@ repository, one command for every app's tests, and the code the apps share.
 ```
 sh folio-studio-<version>-installer.run              # install or update everything
 sh folio-studio-<version>-installer.run --old-formats  # also LibreOffice's converter for old formats
-sh folio-studio-<version>-installer.run --repo-only    # only refresh the local repository
+sh folio-studio-<version>-installer.run --repo-only    # only set up the package source
 sh folio-studio-<version>-installer.run --remove       # take it all off again
 ```
 
 An existing Folio Suite install is moved over: the old repository and key are replaced, and the
 old package names (folio-suite, folio-writer, folio-sheets, folio-deliver) become transitional
 packages, so the old commands keep working.
+
+The installer installs from its own copy of the packages (so it works offline), then points apt at
+the online package source, https://akeilan.github.io/FolioStudio/ (GitHub Pages, `gh-pages`
+branch). From then on new versions arrive through the Software Updater. If that address can't be
+reached at install time, the local copy is kept alongside it until the next run.
 
 ## Tests
 
@@ -46,4 +51,7 @@ after its source tests). A run builds the app, runs its tests from source, build
 the installed package on the release test machines: chroots of Ubuntu 22.04 (`/srv/jammy`), 22.04
 without LibreOffice (`/srv/nolo`) and 24.04 (`/srv/noble`), each with an Xvfb display, plus a Wayland
 pass on 24.04 through `tests/wl.sh`. `tools/mounts.sh` prepares the chroots. The suite itself is built
-with `packaging/build-suite.sh <folder of debs> <output folder>`.
+with `packaging/build-suite.sh <folder of debs> <output folder>`, and published with
+`tools/publish.sh <output folder>`, which replaces the `gh-pages` branch with the new signed
+repository. The signing key lives in `~/.folio-suite-signing` on the release machine; the Product
+Owner keeps a copy (`folio-studio-signing-key.asc`, import with `gpg --import`).
