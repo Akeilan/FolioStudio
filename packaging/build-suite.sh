@@ -14,6 +14,8 @@ DEBS="$(cd "$1" && pwd)"
 OUT="$(mkdir -p "${2:-$HERE/out}" && cd "${2:-$HERE/out}" && pwd)"
 VERSION="$(cat "$HERE/VERSION")"
 KEYHOME="${FOLIO_SUITE_KEYS:-$HOME/.folio-suite-signing}"
+# the online package source the installer points apt at (tools/publish.sh puts the repository there)
+SOURCE_URL="${FOLIO_STUDIO_SOURCE:-https://akeilan.github.io/FolioStudio/}"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 
@@ -73,8 +75,8 @@ meta folio-studio "$DEP" \
   "Description: Folio Studio: Page, Sheet, Show, Post, Draw and Gable" \
   " Installs the Folio apps together: Folio Page (word processor), Folio Sheet" \
   " (spreadsheet), Folio Show (presentations), Folio Post (mail), Folio Draw" \
-  " (pictures) and Folio Gable (3D modelling). Updates come from the studio's" \
-  " local repository through the normal Software Updater."
+  " (pictures) and Folio Gable (3D modelling). Updates come from the Folio" \
+  " Studio package source through the normal Software Updater."
 meta folio-suite "folio-studio (>= $VERSION)" "Description: transitional package: Folio Suite is now Folio Studio" \
   " This package can be removed safely."
 
@@ -86,7 +88,7 @@ repo, ver = sys.argv[1], sys.argv[2]
 files = ["Packages", "Packages.gz"]
 lines = ["Origin: Folio", "Label: Folio Studio", "Suite: stable", "Version: " + ver,
          "Date: " + time.strftime("%a, %d %b %Y %H:%M:%S UTC", time.gmtime()),
-         "Architectures: amd64 all", "Description: Folio Studio local repository"]
+         "Architectures: amd64 all", "Description: Folio Studio packages"]
 for algo, name in (("md5", "MD5Sum"), ("sha256", "SHA256")):
     lines.append(name + ":")
     for f in files:
@@ -102,6 +104,9 @@ fi
 gpg --batch --yes --local-user "Folio Suite" --clearsign -o "$REPO/InRelease" "$REPO/Release"
 gpg --batch --yes --local-user "Folio Suite" -abs -o "$REPO/Release.gpg" "$REPO/Release"
 gpg --batch --export "Folio Suite" > "$WORK/payload/folio-studio-archive-keyring.gpg"
+echo "$SOURCE_URL" > "$WORK/payload/source-url"
+# the same signed repository, for tools/publish.sh
+rm -rf "$OUT/site"; cp -r "$REPO" "$OUT/site"
 cp "$HERE/packaging/install.sh" "$WORK/payload/install.sh"
 chmod 755 "$WORK/payload/install.sh"
 
@@ -112,7 +117,7 @@ RUN="$OUT/folio-studio-${VERSION}-installer.run"
 #!/bin/sh
 # Folio Studio installer. Run: sh folio-studio-*-installer.run   (asks for your password)
 #   --remove      take Folio Studio off again
-#   --repo-only   update the local repository without installing (the Software Updater
+#   --repo-only   set up the package source without installing (the Software Updater
 #                 then offers the new versions)
 #   --old-formats also install LibreOffice's converter for old file formats (not needed otherwise)
 set -e
