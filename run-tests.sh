@@ -1,17 +1,17 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Sheets, Draw, Gable) with the test
+#   ./run-tests.sh            test the installed apps (Writer, Sheets, Deliver, Post, Draw, Gable) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
 #   --quick                   Gable's audit without the click-everything pass
-#   --only sheets,draw,gable,suite   a subset
+#   --only writer,sheets,deliver,post,draw,gable,suite   a subset
 #
-# Source trees: $SHEETS_SRC, $DRAW_SRC, $GABLE_SRC (default ~/src/folio-sheets, ~/src/folio-draw,
-# ~/src/gable). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
+# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $POST_SRC, $DRAW_SRC, $GABLE_SRC (default
+# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SOURCE=0; QUICK=0; ONLY="sheets,draw,gable,suite"
+SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,suite"
 while [ $# -gt 0 ]; do
   case "$1" in
     --source) SOURCE=1 ;;
@@ -22,7 +22,10 @@ while [ $# -gt 0 ]; do
   esac
   shift
 done
+WRITER_SRC="${WRITER_SRC:-$HOME/src/folio-writer}"
 SHEETS_SRC="${SHEETS_SRC:-$HOME/src/folio-sheets}"
+DELIVER_SRC="${DELIVER_SRC:-$HOME/src/folio-deliver}"
+POST_SRC="${POST_SRC:-$HOME/src/foliopost}"
 DRAW_SRC="${DRAW_SRC:-$HOME/src/folio-draw}"
 GABLE_SRC="${GABLE_SRC:-$HOME/src/gable}"
 want() { [[ ",$ONLY," == *",$1,"* ]]; }
@@ -75,6 +78,47 @@ run() {   # name, then the command
 }
 
 echo "Folio suite tests ($([ $SOURCE = 1 ] && echo "source trees" || echo "installed apps")), display $DISPLAY"
+
+# ---------------------------------------------------------------- Writer
+if want writer; then
+  if [ $SOURCE = 1 ]; then
+    run "Writer engine (Rust)" bash -c "cd '$WRITER_SRC/core' && cargo test --release --lib"
+    WCMD="env FOLIO_SHARE=$WRITER_SRC/share PYTHONPATH=$WRITER_SRC/app python3 -m folio"
+  else
+    WCMD="folio-writer"
+  fi
+  for t in "$WRITER_SRC"/tests/native/n*.py; do
+    [ -f "$t" ] || continue
+    rm -f /tmp/ftest.log
+    (cd "$WORK" && FOLIO_ENGINE=native FOLIO_WRITER_TESTS="$WRITER_SRC/tests" FOLIO_TEST_SCRIPT="$t" timeout 300 $WCMD >/dev/null 2>&1); rc=$?
+    n=$(grep -cE '^(PASS|FAIL)' /tmp/ftest.log 2>/dev/null); f=$(grep -cE '^(FAIL|ERROR)' /tmp/ftest.log 2>/dev/null)
+    [ $rc -ne 0 ] && [ "${f:-0}" = "0" ] && f="error"
+    row "Writer $(basename "$t" .py)" "${n:-0}" "${f:-error}"
+    [ "$f" != "0" ] && grep -E '^(FAIL|ERROR)' /tmp/ftest.log 2>/dev/null | head -5 | sed "s/^/  [Writer $(basename "$t" .py)] /" >&2
+  done
+fi
+
+# ---------------------------------------------------------------- Deliver and Post (UI scripts print ok / FAIL lines)
+ui_app() {  # label, runner script, test dir, scripts...
+  local label="$1" runner="$2" dir="$3"; shift 3
+  for u in "$@"; do
+    [ -f "$dir/$u" ] || continue
+    out=$(cd "$WORK" && UI_TIMEOUT=600 sh "$runner" "$dir/$u" 2>&1); rc=$?
+    n=$(echo "$out" | grep -cE '^(ok|FAIL) '); f=$(echo "$out" | grep -cE '^FAIL ')
+    echo "$out" | grep -q "Traceback" && [ "$f" = "0" ] && f="error"
+    [ $rc -ne 0 ] && [ "$f" = "0" ] && f="error"
+    row "$label ${u%.py}" "$n" "$f"
+    [ "$f" != "0" ] && echo "$out" | grep -E '^FAIL|Traceback' | head -5 | sed "s/^/  [$label ${u%.py}] /" >&2
+  done
+}
+if want deliver; then
+  if [ $SOURCE = 1 ]; then R="$DELIVER_SRC/tests/run_ui.sh"; else R="$DELIVER_SRC/tests/run_installed.sh"; fi
+  ui_app Deliver "$R" "$DELIVER_SRC/tests" ui_basic.py ui_more.py ui_anim.py ui_review.py ui_master.py ui_show2.py ui_objects.py ui_media.py ui_theme.py
+fi
+if want post; then
+  if [ $SOURCE = 1 ]; then R="$POST_SRC/tests/run_ui.sh"; else R="$POST_SRC/tests/run_installed.sh"; fi
+  ui_app Post "$R" "$POST_SRC/tests" ui_mail.py ui_editor.py ui_writered.py ui_attach.py ui_calendar.py ui_people.py ui_tasks.py ui_folders.py ui_pgp.py ui_smime.py
+fi
 
 # ---------------------------------------------------------------- Sheets
 if want sheets; then
