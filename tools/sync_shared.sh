@@ -31,6 +31,16 @@ put() {  # src dst
 for app in "${!RIBBON[@]}"; do
   [ -d "$ROOT/$app" ] && put "$HERE/shared/ribbon.py" "$ROOT/$app/${RIBBON[$app]}"
 done
+# X3-03: KeyTips, ScreenTips and light/dark detection, one copy for the apps that share the ribbon
+for app in folio-writer folio-sheets folio-deliver foliopost; do
+  [ -d "$ROOT/$app" ] || continue
+  put "$HERE/shared/keytips.py" "$ROOT/$app/${PKG[$app]}/keytips.py"
+  put "$HERE/shared/screentips.py" "$ROOT/$app/${PKG[$app]}/screentips.py"
+done
+for app in folio-sheets folio-deliver foliopost folio-draw; do
+  [ -d "$ROOT/$app" ] || continue
+  put "$HERE/shared/appearance.py" "$ROOT/$app/${PKG[$app]}/appearance.py"
+done
 for app in "${!PKG[@]}"; do
   [ -d "$ROOT/$app" ] || continue
   put "$HERE/shared/fontfix.py" "$ROOT/$app/${PKG[$app]}/fontfix.py"
