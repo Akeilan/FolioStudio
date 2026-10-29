@@ -6,7 +6,7 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 EX="$(mktemp -d)"
 trap 'rm -rf "$EX"' EXIT
 GABLE_BIN="${GABLE_BIN:-folio-gable}"
-SHEETS_PP="${SHEETS_PYTHONPATH:-/usr/lib/folio-sheets}"
+SHEETS_PP="${SHEETS_PYTHONPATH:-/usr/lib/folio-sheet}"; [ -d "$SHEETS_PP" ] || SHEETS_PP=/usr/lib/folio-sheets
 GABLE_CLIP_SERVE="$EX" AUDIT_ONLY=copyview timeout 180 "$GABLE_BIN" --audit > "$EX/gable.log" 2>&1 &
 G=$!
 PYTHONPATH="${DRAW_PYTHONPATH:-}" timeout 180 python3 "$HERE/clip_draw.py" "$EX" > "$EX/draw.log" 2>&1 &
