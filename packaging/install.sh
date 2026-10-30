@@ -12,7 +12,7 @@ OLD_KEY=/usr/share/keyrings/folio-suite-archive-keyring.gpg
 OLD_LIST=/etc/apt/sources.list.d/folio-suite.list
 if [ "$1" = "--remove" ]; then
   for p in folio-studio folio-suite folio-page folio-writer folio-sheet folio-sheets folio-show folio-deliver \
-           folio-post folio-draw folio-gable folio-chord; do
+           folio-post folio-draw folio-gable folio-chord folio-reel; do
     dpkg -s "$p" >/dev/null 2>&1 && apt-get -y purge "$p" || true
   done
   rm -f "$LIST" "$KEY" "$OLD_LIST" "$OLD_KEY"
