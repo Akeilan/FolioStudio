@@ -108,6 +108,7 @@ gpg --batch --export "Folio Suite" > "$WORK/payload/folio-studio-archive-keyring
 echo "$SOURCE_URL" > "$WORK/payload/source-url"
 # the same signed repository, for tools/publish.sh
 rm -rf "$OUT/site"; cp -r "$REPO" "$OUT/site"
+cp "$WORK/payload/folio-studio-archive-keyring.gpg" "$OUT/site/"   # the public key, for adding the source by hand
 cp "$HERE/packaging/install.sh" "$WORK/payload/install.sh"
 chmod 755 "$WORK/payload/install.sh"
 

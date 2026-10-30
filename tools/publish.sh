@@ -16,7 +16,11 @@ cp -r "$SITE/." "$W/"
 touch "$W/.nojekyll"
 {
   echo '<!doctype html><meta charset="utf-8"><title>Folio Studio packages</title>'
-  echo "<p>Folio Studio $VER package source. Run the Folio Studio installer to add it.</p><ul>"
+  echo "<p>Folio Studio $VER package source for Ubuntu and Zorin OS. To add it and install everything:</p><pre>"
+  echo "sudo curl -fsSL -o /usr/share/keyrings/folio-studio-archive-keyring.gpg https://akeilan.github.io/FolioStudio/folio-studio-archive-keyring.gpg"
+  echo "echo \"deb [signed-by=/usr/share/keyrings/folio-studio-archive-keyring.gpg] https://akeilan.github.io/FolioStudio/ ./\" | sudo tee /etc/apt/sources.list.d/folio-studio.list"
+  echo "sudo apt update"
+  echo "sudo apt install folio-studio</pre><p>Packages:</p><ul>"
   for f in "$W"/*.deb; do b="$(basename "$f")"; echo "<li>$b</li>"; done
   echo "</ul>"
 } > "$W/index.html"
