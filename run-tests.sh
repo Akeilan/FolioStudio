@@ -1,17 +1,17 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable) with the test
+#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable, Chord) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
 #   --quick                   Gable's audit without the click-everything pass
-#   --only writer,sheets,deliver,post,draw,gable,suite   a subset
+#   --only writer,sheets,deliver,post,draw,gable,chord,suite   a subset
 #
-# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $POST_SRC, $DRAW_SRC, $GABLE_SRC (default
-# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
+# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $POST_SRC, $DRAW_SRC, $GABLE_SRC, $CHORD_SRC (default
+# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,suite"
+SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,chord,suite"
 while [ $# -gt 0 ]; do
   case "$1" in
     --source) SOURCE=1 ;;
@@ -28,6 +28,7 @@ DELIVER_SRC="${DELIVER_SRC:-$HOME/src/folio-deliver}"
 POST_SRC="${POST_SRC:-$HOME/src/foliopost}"
 DRAW_SRC="${DRAW_SRC:-$HOME/src/folio-draw}"
 GABLE_SRC="${GABLE_SRC:-$HOME/src/gable}"
+CHORD_SRC="${CHORD_SRC:-$HOME/src/folio-chord}"
 want() { [[ ",$ONLY," == *",$1,"* ]]; }
 
 if [ -z "$DISPLAY" ]; then
@@ -118,6 +119,14 @@ fi
 if want post; then
   if [ $SOURCE = 1 ]; then R="$POST_SRC/tests/run_ui.sh"; else R="$POST_SRC/tests/run_installed.sh"; fi
   ui_app Post "$R" "$POST_SRC/tests" ui_mail.py ui_editor.py ui_writered.py ui_attach.py ui_calendar.py ui_people.py ui_tasks.py ui_folders.py ui_pgp.py ui_smime.py
+fi
+
+if want chord; then
+  if [ $SOURCE = 1 ]; then R="$CHORD_SRC/tests/run_ui.sh"; CP="$CHORD_SRC/app"; else R="$CHORD_SRC/tests/run_installed.sh"; CP=/usr/lib/folio-chord; fi
+  for t in test_engine.py test_net.py; do
+    [ -f "$CHORD_SRC/tests/$t" ] && run "Chord ${t%.py}" env PYTHONPATH="$CP" FOLIO_CHORD_AUDIOSINK=fakesink python3 "$CHORD_SRC/tests/$t"
+  done
+  ui_app Chord "$R" "$CHORD_SRC/tests" ui_library.py ui_play.py ui_net.py ui_cd.py command_walk.py
 fi
 
 # ---------------------------------------------------------------- Sheet (formerly Sheets)
