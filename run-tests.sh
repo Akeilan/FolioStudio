@@ -1,17 +1,17 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable, Chord) with the test
+#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable, Chord, Reel) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
 #   --quick                   Gable's audit without the click-everything pass
-#   --only writer,sheets,deliver,post,draw,gable,chord,suite   a subset
+#   --only writer,sheets,deliver,post,draw,gable,chord,reel,suite   a subset
 #
 # Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $POST_SRC, $DRAW_SRC, $GABLE_SRC, $CHORD_SRC (default
-# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
+# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord, ~/src/folio-reel). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,chord,suite"
+SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,chord,reel,suite"
 while [ $# -gt 0 ]; do
   case "$1" in
     --source) SOURCE=1 ;;
@@ -29,6 +29,7 @@ POST_SRC="${POST_SRC:-$HOME/src/foliopost}"
 DRAW_SRC="${DRAW_SRC:-$HOME/src/folio-draw}"
 GABLE_SRC="${GABLE_SRC:-$HOME/src/gable}"
 CHORD_SRC="${CHORD_SRC:-$HOME/src/folio-chord}"
+REEL_SRC="${REEL_SRC:-$HOME/src/folio-reel}"
 want() { [[ ",$ONLY," == *",$1,"* ]]; }
 
 if [ -z "$DISPLAY" ]; then
@@ -127,6 +128,14 @@ if want chord; then
     [ -f "$CHORD_SRC/tests/$t" ] && run "Chord ${t%.py}" env PYTHONPATH="$CP" FOLIO_CHORD_AUDIOSINK=fakesink python3 "$CHORD_SRC/tests/$t"
   done
   ui_app Chord "$R" "$CHORD_SRC/tests" ui_library.py ui_play.py ui_net.py ui_cd.py ui_more.py ui_classic.py command_walk.py
+fi
+
+if want reel; then
+  if [ $SOURCE = 1 ]; then R="$REEL_SRC/tests/run_ui.sh"; CP="$REEL_SRC/app"; else R="$REEL_SRC/tests/run_installed.sh"; CP=/usr/lib/folio-reel; fi
+  run "Reel test_engine" env PYTHONPATH="$CP" python3 "$REEL_SRC/tests/test_engine.py"
+  if [ $SOURCE = 1 ]; then run "Reel test_cli" env PYTHONPATH="$CP" python3 "$REEL_SRC/tests/test_cli.py"
+  else run "Reel test_cli" env PYTHONPATH="$CP" REEL_CMD=/usr/bin/folio-reel python3 "$REEL_SRC/tests/test_cli.py"; fi
+  FOLIO_REEL_AUDIOSRC="audiotestsrc is-live=true freq=500" ui_app Reel "$R" "$REEL_SRC/tests" ui_basic.py ui_record.py ui_theme.py command_walk.py
 fi
 
 # ---------------------------------------------------------------- Sheet (formerly Sheets)
