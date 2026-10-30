@@ -123,10 +123,10 @@ fi
 
 if want chord; then
   if [ $SOURCE = 1 ]; then R="$CHORD_SRC/tests/run_ui.sh"; CP="$CHORD_SRC/app"; else R="$CHORD_SRC/tests/run_installed.sh"; CP=/usr/lib/folio-chord; fi
-  for t in test_engine.py test_net.py; do
+  for t in test_engine.py test_net.py test_more.py; do
     [ -f "$CHORD_SRC/tests/$t" ] && run "Chord ${t%.py}" env PYTHONPATH="$CP" FOLIO_CHORD_AUDIOSINK=fakesink python3 "$CHORD_SRC/tests/$t"
   done
-  ui_app Chord "$R" "$CHORD_SRC/tests" ui_library.py ui_play.py ui_net.py ui_cd.py command_walk.py
+  ui_app Chord "$R" "$CHORD_SRC/tests" ui_library.py ui_play.py ui_net.py ui_cd.py ui_more.py ui_classic.py command_walk.py
 fi
 
 # ---------------------------------------------------------------- Sheet (formerly Sheets)
