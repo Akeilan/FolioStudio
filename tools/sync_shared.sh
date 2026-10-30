@@ -19,6 +19,7 @@ declare -A PKG=(
   [folio-deliver]=app/folio_deliver
   [foliopost]=app/folio_post
   [folio-draw]=folio_draw
+  [folio-chord]=app/folio_chord
 )
 bad=0
 put() {  # src dst
@@ -37,7 +38,7 @@ for app in folio-writer folio-sheets folio-deliver foliopost; do
   put "$HERE/shared/keytips.py" "$ROOT/$app/${PKG[$app]}/keytips.py"
   put "$HERE/shared/screentips.py" "$ROOT/$app/${PKG[$app]}/screentips.py"
 done
-for app in folio-sheets folio-deliver foliopost folio-draw; do
+for app in folio-sheets folio-deliver foliopost folio-draw folio-chord; do
   [ -d "$ROOT/$app" ] || continue
   put "$HERE/shared/appearance.py" "$ROOT/$app/${PKG[$app]}/appearance.py"
 done
