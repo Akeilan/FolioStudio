@@ -1,0 +1,299 @@
+Package: folio-chord
+Version: 0.2.2
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 928
+Depends: python3 (>= 3.10), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-gstreamer-1.0, gir1.2-gst-plugins-base-1.0, gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, gstreamer1.0-libav, python3-mutagen, librsvg2-common
+Recommends: gstreamer1.0-plugins-ugly, gstreamer1.0-pulseaudio | gstreamer1.0-pipewire, wodim, genisoimage, eject, fonts-crosextra-carlito
+Filename: ./folio-chord_0.2.2_all.deb
+Size: 126100
+MD5sum: 122670a35dd5f7fc128435fa41290349
+SHA1: 5c3b935e6c0cf213053bf0354833493ba51a9664
+SHA256: a63951d10cab5f3e57ebe3ef58c35e033544e2399908e3380ae26a8f3ccb8ce2
+Section: sound
+Priority: optional
+Description: music player for music, internet radio and podcasts
+ Folio Chord is a music player in the manner of the classic iTunes: a library
+ of your music folders with the column browser, list, album list and grid
+ views, playlists and Smart Playlists, ratings, Get Info, the status display,
+ Mini Player, equalizer and visualizer. Internet radio comes from the
+ radio-browser.info directory, podcasts from Apple's public podcast directory
+ or Podcast Index. Audio CDs can be imported (with track names from
+ MusicBrainz) and playlists burned to disc. View > Look > Chordamp switches to
+ a classic small-player look with skins. No account is needed.
+
+Package: folio-cork
+Version: 0.1.0
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 11076
+Depends: libc6 (>= 2.35), libgcc-s1, libx11-6, libx11-xcb1, libxcursor1, libxi6, libxcb1, libxkbcommon0, libxkbcommon-x11-0, libwayland-client0
+Recommends: cups-client, xdg-utils, fonts-dejavu-core
+Suggests: libreoffice-draw
+Filename: ./folio-cork_0.1.0_amd64.deb
+Size: 3531360
+MD5sum: 7f3e1307984638a0f2dcb38e4c125b7d
+SHA1: 16fbf43b420392cf6172dc9298d4aad0e17f53d0
+SHA256: 65343b8c141fd432b4e45a1dbb051fe4054a31e2e015526dc6ba3519aaf65a0c
+Section: graphics
+Priority: optional
+Description: diagrams, whiteboards and mood boards
+ Folio Cork draws diagrams and runs whiteboards with a ribbon interface,
+ KeyTips and ScreenTips: shapes and stencils (flowchart, network, UML,
+ database, floor plan, electrical and electronic symbols), connectors that
+ stay glued and route around shapes, sticky notes, pen, frames, voting,
+ templates, mood boards with colour palettes picked from pictures, comments,
+ layers, automatic layout and org charts from a spreadsheet. Opens and saves
+ Visio drawings (.vsdx), exports PNG, SVG and PDF, and lets people on the same
+ network work on one board together. Everything stays on this computer.
+
+Package: folio-deliver
+Version: 0.9.2
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Depends: folio-show (>= 0.9.2)
+Filename: ./folio-deliver_0.9.2_all.deb
+Size: 996
+MD5sum: 1f74e05c405b42a4340082a391044d1a
+SHA1: 9b5f97c371bfc9a7f1a2ee9e899a91dabf3657b1
+SHA256: 4f7657b6d2f3cb9df5e0def5c3ef59d2f981c5f25b781ef76bc2f6c1e7d58e05
+Section: oldlibs
+Priority: optional
+Description: transitional package for Folio Show
+ Folio Deliver has been renamed Folio Show. This package moves existing
+ installations over to folio-show and can be removed afterwards.
+
+Package: folio-draw
+Version: 1.10.1
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 2420
+Depends: python3 (>= 3.8), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, librsvg2-common, libc6 (>= 2.34), libgcc-s1
+Filename: ./folio-draw_1.10.1_amd64.deb
+Size: 829856
+MD5sum: 2caae79ccb66030b37c0ae45c0d60006
+SHA1: 024b9516c9c9ccdab0dffb3f6f2cdcb24cb00d5e
+SHA256: 3a4607e07b5004c8f93c935b1b118df5843123a95278c40226c6adad270553b7
+Section: graphics
+Priority: optional
+Homepage: https://folio.local/draw
+Description: Simple drawing program with layers and real transparency
+ Folio Draw is a quick, uncluttered picture editor in the spirit of the classic
+ desktop paint program: pencil, brushes, shapes, text, fill, selection, crop,
+ resize and rotate — plus layers, blend modes and true alpha transparency.
+ Opens and saves PNG, JPEG, BMP, GIF, WebP, TIFF, Windows icons and
+ OpenRaster (.ora, keeps layers); animated GIF and WebP open with one frame per
+ layer. Embroidery: pictures become editable shapes with fill, satin and
+ running stitches, lettering, a stitch preview, and PES/DST export for
+ Brother (Artspira) and other machines. All codecs are its own native
+ engine. Part of the Folio suite.
+
+Package: folio-gable
+Version: 2.7.0
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 3948
+Depends: libc6 (>= 2.35), libgcc-s1 (>= 3.0), libglu1-mesa | libglu1, libqt6core6 (>= 6.2.0), libqt6dbus6 (>= 6.1.2), libqt6gui6 (>= 6.2.0), libqt6opengl6 (>= 6.1.2), libqt6openglwidgets6 (>= 6.1.2), libqt6printsupport6 (>= 6.1.2), libqt6svg6 (>= 6.2.0), libqt6widgets6 (>= 6.2.0), libqt6xml6 (>= 6.1.2), libstdc++6 (>= 11), zlib1g (>= 1:1.1.4), qt6-qpa-plugins
+Recommends: qt6-image-formats-plugins, qt6-wayland
+Conflicts: gable
+Replaces: gable
+Filename: ./folio-gable_2.7.0_amd64.deb
+Size: 1270900
+MD5sum: 1d13387a791fa87905255cf01a616785
+SHA1: 8bca1bd6e671dbc739e4679e12ec68adfbcfeadf
+SHA256: 3fa4bfa53dbaa077a7de5a36cd6fe21e4b486cbdb63ee5e77e72df2802f5b33d
+Section: graphics
+Priority: optional
+Description: Native 3D modeler with push/pull, inference and components
+ Folio Gable is a fast, keyboard-driven 3D modeler for Linux in the style of
+ classic push/pull modelers: sticky geometry with automatic faces,
+ inference snapping with axis locks, groups and components, solid tools,
+ follow me, section planes, sun shadows, scenes, styles, tags,
+ materials with textures, dimensions and text, match photo, drawing sheets
+ printed or saved as PDF, OBJ/STL/DAE/DXF import and export, 3DS, KMZ and
+ IFC import, and glTF/GLB and 3MF export.
+
+Package: folio-page
+Version: 2.33.1
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 23732
+Depends: python3 (>= 3.10), libc6 (>= 2.34), libcairo2, libfreetype6, python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-poppler-0.18, python3-enchant, python3-pil, librsvg2-common, fonts-crosextra-carlito, fonts-crosextra-caladea, fonts-liberation2 | fonts-liberation
+Recommends: hunspell-en-us | hunspell-dictionary, mythes-en-us, hyphen-en-us, cups-client, xdg-utils, fonts-dejavu-extra, fonts-lmodern, python3-speechd, speech-dispatcher, espeak-ng
+Suggests: libreoffice-writer
+Breaks: folio-writer (<< 2.33.0)
+Replaces: folio-writer (<< 2.33.0)
+Filename: ./folio-page_2.33.1_amd64.deb
+Size: 7559836
+MD5sum: a5ceebec946ff597f61c41225d84b4dd
+SHA1: 55bc4b7866925311fbbb021a567ac055a4e21e47
+SHA256: ec159174011166dbc2a4b314df2f918cbb7b84e4b8f7d328d3923a0e41607075
+Section: editors
+Priority: optional
+Description: ribbon word processor (formerly Folio Writer)
+ Folio Page is a word processor with a ribbon interface, KeyTips, a File
+ view, the standard desktop word-processor keyboard shortcuts, a linear-format
+ equation editor and .docx as its native format.
+
+Package: folio-post
+Version: 0.6.3
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 18136
+Depends: python3 (>= 3.10), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, librsvg2-common, libsqlite3-0, tzdata
+Recommends: gir1.2-secret-1, gnupg, openssl, python3-enchant, hunspell-en-us | hunspell-dictionary, xdg-utils, fonts-crosextra-carlito, pst-utils, libemail-outlook-message-perl, gnome-online-accounts
+Filename: ./folio-post_0.6.3_amd64.deb
+Size: 5997380
+MD5sum: 656470b5e1a306683fdf4357e840cd77
+SHA1: 7308597fd1614830ea147dbb6c88bc4fbf652afc
+SHA256: 4c70d3c9157bbd7f9638559b23e26f5b5983312094d3e3331b87390a0e9d085a
+Section: mail
+Priority: optional
+Description: ribbon mail program
+ Folio Post is a mail program with a ribbon interface, KeyTips, a Folder
+ Pane, message list and Reading Pane, and the standard desktop mail
+ keyboard shortcuts. It works with Gmail (Google sign-in or an app
+ password), Proton Mail through Proton Mail Bridge, and any IMAP, POP3 and
+ SMTP account, and calendars from Google, any CalDAV server and internet
+ (.ics) links such as Proton Calendar's. Mail is kept on this computer
+ and readable offline; pictures from the internet aren't loaded until
+ allowed.
+
+Package: folio-reel
+Version: 0.1.0
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 3892
+Depends: python3 (>= 3.10), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-gstreamer-1.0, gir1.2-gst-plugins-base-1.0, gir1.2-ges-1.0, gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, gstreamer1.0-plugins-bad, gstreamer1.0-plugins-ugly, gstreamer1.0-libav, gstreamer1.0-gtk3, gstreamer1.0-x, librsvg2-common, libx11-6
+Recommends: gstreamer1.0-pulseaudio | gstreamer1.0-pipewire, gstreamer1.0-pipewire, xdg-desktop-portal, xdg-utils
+Filename: ./folio-reel_0.1.0_all.deb
+Size: 2759464
+MD5sum: 031753fcd67ee77fae42453dc8c1ed53
+SHA1: 69334dfc50f86306ab22dfb6c78422b8cda7ea1c
+SHA256: deaf30e2eb7f4d2993037fb213612cd0ed8d1169a4a80bc9cbab63793a7b2f32
+Section: video
+Priority: optional
+Description: ribbon video editor
+ Folio Reel is a video editor with a ribbon interface, KeyTips and ScreenTips:
+ a media bin, a timeline with titles, video, audio and music tracks, trimming,
+ splitting and ripple delete with snapping, crossfades and wipes, colour,
+ speed, crop and pan-and-zoom, titles and captions, a music bed that dips
+ under speech, voice-over, screen and camera recording, and MP4 or WebM
+ export at 720p, 1080p and 4K. Everything stays on this computer.
+
+Package: folio-sheet
+Version: 0.19.1
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 4604
+Depends: python3 (>= 3.10), libc6 (>= 2.34), libcairo2, libpango-1.0-0, libpangocairo-1.0-0, libglib2.0-0, python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-poppler-0.18, librsvg2-common, fonts-crosextra-carlito, fonts-crosextra-caladea, fonts-liberation2 | fonts-liberation
+Recommends: xdg-utils, libhunspell-1.7-0, hunspell-en-us | hunspell-dictionary, mythes-en-us | mythes-thesaurus
+Suggests: libreoffice-calc-nogui | libreoffice-calc
+Breaks: folio-sheets (<< 0.19.0)
+Replaces: folio-sheets (<< 0.19.0)
+Filename: ./folio-sheet_0.19.1_amd64.deb
+Size: 3674320
+MD5sum: aba4e3780cb0b9c559356c1836dad3a0
+SHA1: 55fb5a1061c9b2d3df50e2f07c6ff091bee55dcf
+SHA256: 5476f19b36cf888a19bc897ec3ee0dafe3df6aff6dea79301939d8b86565286a
+Section: editors
+Priority: optional
+Description: ribbon spreadsheet
+ Folio Sheet is a spreadsheet with a ribbon interface, KeyTips, a File
+ view, the standard desktop spreadsheet keyboard shortcuts and .xlsx as its
+ native format, kept lossless: whatever it doesn't understand is saved
+ back untouched.
+ .
+ Folio Sheet was called Folio Sheets before 0.19; the folio-sheets command still
+ starts it.
+
+Package: folio-sheets
+Version: 0.19.1
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Depends: folio-sheet (>= 0.19.1)
+Filename: ./folio-sheets_0.19.1_all.deb
+Size: 1360
+MD5sum: 7fdb16d5df58e94cbaa6d3e4ed706ce4
+SHA1: 0fbe75b3be9c423deb97c483c3e2ca6def75eb24
+SHA256: 25f0923ceb6eca0299cc71e426d4e0e3ea84ab93f87986bbe2f450b0b4bda6ed
+Section: oldlibs
+Priority: optional
+Description: transitional package: Folio Sheets is now Folio Sheet
+ Folio Sheets was renamed Folio Sheet. This package moves an installed Folio
+ Sheets over to folio-sheet and can be removed afterwards.
+
+Package: folio-show
+Version: 0.9.2
+Architecture: amd64
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Installed-Size: 12112
+Depends: python3 (>= 3.10), libc6 (>= 2.34), libcairo2, libfreetype6, libpango-1.0-0, libpangocairo-1.0-0, libglib2.0-0, python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, librsvg2-common, fonts-crosextra-carlito, fonts-crosextra-caladea, fonts-liberation2 | fonts-liberation, python3-cryptography, python3-shapely, fontconfig
+Recommends: xdg-utils, python3-enchant, hunspell-en-us | hunspell-dictionary, mythes-en-us | mythes-dictionary, folio-reel | ffmpeg, gir1.2-gstreamer-1.0, gstreamer1.0-gtk3, gstreamer1.0-plugins-good, gstreamer1.0-libav
+Suggests: folio-post, libreoffice-impress-nogui | libreoffice-impress
+Breaks: folio-deliver (<< 0.9.0)
+Replaces: folio-deliver (<< 0.9.0)
+Filename: ./folio-show_0.9.2_amd64.deb
+Size: 4730312
+MD5sum: e483947432f4e576016c01651099cf51
+SHA1: ea34f3f5eae8666b93da7d4eee55afac8a59b3c5
+SHA256: 00abb9a62c458aba625259b71693189a3e990486fb5ff16327ea106529653558
+Section: editors
+Priority: optional
+Description: ribbon presentation program
+ Folio Show (formerly Folio Deliver) is a presentation program with a ribbon interface, KeyTips,
+ a File view, Slide Show and Presenter View, the standard desktop
+ presentation keyboard shortcuts and .pptx as its native format, kept
+ lossless: whatever it doesn't understand is saved back untouched.
+
+Package: folio-studio
+Version: 1.10.0
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Depends: folio-page (>= 2.33.1), folio-sheet (>= 0.19.1), folio-show (>= 0.9.2), folio-post (>= 0.6.3), folio-draw (>= 1.10.1), folio-gable (>= 2.7.0), folio-chord (>= 0.2.2), folio-reel (>= 0.1.0), folio-cork (>= 0.1.0)
+Breaks: folio-suite (<< 1.10.0)
+Filename: ./folio-studio_1.10.0_all.deb
+Size: 2816
+MD5sum: 53127a32422f9c79b5f711a638f601b5
+SHA1: 9393fcf6406eea561301cf07137d103946888c91
+SHA256: cef42c4e35d1175a8fe8d09b2fd75159b3ba9ed54c9557f9ea248fc4f819de55
+Section: metapackages
+Priority: optional
+Description: Folio Studio: Page, Sheet, Show, Post, Draw, Gable, Chord, Reel and Cork
+ Installs the Folio apps together: Folio Page (word processor), Folio Sheet
+ (spreadsheet), Folio Show (presentations), Folio Post (mail), Folio Draw
+ (pictures), Folio Gable (3D modelling), Folio Chord (music, radio and
+ podcasts) and Folio Reel (video editing). Updates come from the Folio
+ Studio package source through the normal Software Updater.
+
+Package: folio-suite
+Version: 1.10.0
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Depends: folio-studio (>= 1.10.0)
+Filename: ./folio-suite_1.10.0_all.deb
+Size: 2428
+MD5sum: e15931711684cca35d223925ad67e699
+SHA1: 156936a40d54012e7044f7b0b9f14b157d7cb6e9
+SHA256: 12c5858a3fb349dae6c43b8f421ec5b22492d8835c4f5e39bef6a3fd6425472b
+Section: metapackages
+Priority: optional
+Description: transitional package: Folio Suite is now Folio Studio
+ This package can be removed safely.
+
+Package: folio-writer
+Version: 2.33.1
+Architecture: all
+Maintainer: Ron Shillings <ron.shillings@gmail.com>
+Depends: folio-page (>= 2.33.1)
+Filename: ./folio-writer_2.33.1_all.deb
+Size: 1628
+MD5sum: 43c0c109f07d5af775332448e0ec8e2b
+SHA1: 4eaf119d06563c59fdef76c63b25f53c72ee099d
+SHA256: 962d9a0368b62ad3d6c958d5b9c55f2754bbfb1954843959441d26a8ae2071c4
+Section: oldlibs
+Priority: optional
+Description: transitional package: Folio Writer is now Folio Page
+ Folio Writer was renamed Folio Page. This empty package installs folio-page;
+ it can be removed afterwards.
+
