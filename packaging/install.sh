@@ -12,7 +12,7 @@ OLD_KEY=/usr/share/keyrings/folio-suite-archive-keyring.gpg
 OLD_LIST=/etc/apt/sources.list.d/folio-suite.list
 if [ "$1" = "--remove" ]; then
   for p in folio-studio folio-suite folio-page folio-writer folio-sheet folio-sheets folio-show folio-deliver \
-           folio-post folio-draw folio-gable folio-chord folio-reel; do
+           folio-post folio-draw folio-gable folio-chord folio-reel folio-cork; do
     dpkg -s "$p" >/dev/null 2>&1 && apt-get -y purge "$p" || true
   done
   rm -f "$LIST" "$KEY" "$OLD_LIST" "$OLD_KEY"
@@ -78,4 +78,4 @@ for p in folio-suite folio-writer folio-sheets folio-deliver; do
 done
 DEBIAN_FRONTEND=noninteractive apt-get install -y -o APT::Install-Suggests=0 folio-studio $UPGRADE $EXTRA
 online
-echo "Folio Studio installed: Page, Sheet, Show, Post, Draw, Gable and Chord are in the app menu."
+echo "Folio Studio installed: Page, Sheet, Show, Post, Draw, Gable, Chord, Reel and Cork are in the app menu."

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Builds the Folio Studio installer (formerly Folio Suite): one file that installs Page, Sheet,
-# Show, Post, Draw, Gable, Chord and Reel through a local apt repository, so later versions arrive
+# Show, Post, Draw, Gable, Chord, Reel and Cork through a local apt repository, so later versions arrive
 # through the normal Software Updater.
 #
 #   packaging/build-suite.sh <folder with the app .debs> [output folder]
@@ -32,7 +32,7 @@ newest() {   # newest .deb of a package in $DEBS
 REPO="$WORK/payload/repo"
 mkdir -p "$REPO"
 DEPENDS=()
-for p in folio-page folio-sheet folio-show folio-post folio-draw folio-gable folio-chord folio-reel; do
+for p in folio-page folio-sheet folio-show folio-post folio-draw folio-gable folio-chord folio-reel folio-cork; do
   f="$(newest $p)"
   [ -n "$f" ] || { echo "missing $p in $DEBS" >&2; exit 1; }
   cp "$f" "$REPO/"
@@ -72,7 +72,7 @@ SH
 DEP="$(IFS=,; echo "${DEPENDS[*]}" | sed 's/,/, /g')"
 meta folio-studio "$DEP" \
   "Breaks: folio-suite (<< $VERSION)" \
-  "Description: Folio Studio: Page, Sheet, Show, Post, Draw, Gable, Chord and Reel" \
+  "Description: Folio Studio: Page, Sheet, Show, Post, Draw, Gable, Chord, Reel and Cork" \
   " Installs the Folio apps together: Folio Page (word processor), Folio Sheet" \
   " (spreadsheet), Folio Show (presentations), Folio Post (mail), Folio Draw" \
   " (pictures), Folio Gable (3D modelling), Folio Chord (music, radio and" \
