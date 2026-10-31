@@ -3,7 +3,8 @@
 Folio Studio (formerly Folio Suite) is the eight Folio apps together: Folio Page (word processor,
 formerly Writer), Folio Sheet (spreadsheet, formerly Sheets), Folio Show (presentations, formerly
 Deliver), Folio Post (mail and calendar), Folio Draw (pictures and embroidery), Folio Gable (3D
-modelling), Folio Chord (music, internet radio and podcasts) and Folio Reel (video editing). This repository holds what spans the
+modelling), Folio Chord (music, internet radio and podcasts), Folio Reel (video editing) and Folio Cork
+(diagrams, whiteboards and mood boards). This repository holds what spans the
 apps: the installer and its signed apt repository, one command for every app's tests, and the code the apps share.
 
 ## Install
