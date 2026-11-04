@@ -10,7 +10,6 @@ declare -A RIBBON=(
   [folio-writer]=app/folio/ribbon.py
   [folio-sheets]=app/folio_sheets/ribbon.py
   [folio-deliver]=app/folio_deliver/ribbon.py
-  [foliopost]=app/folio_post/ribbon.py
   [folio-draw]=folio_draw/suiteribbon.py
   [folio-reel]=app/folio_reel/ribbon.py
 )
@@ -18,7 +17,6 @@ declare -A PKG=(
   [folio-writer]=app/folio
   [folio-sheets]=app/folio_sheets
   [folio-deliver]=app/folio_deliver
-  [foliopost]=app/folio_post
   [folio-draw]=folio_draw
   [folio-chord]=app/folio_chord
   [folio-reel]=app/folio_reel
@@ -35,12 +33,12 @@ for app in "${!RIBBON[@]}"; do
   [ -d "$ROOT/$app" ] && put "$HERE/shared/ribbon.py" "$ROOT/$app/${RIBBON[$app]}"
 done
 # X3-03: KeyTips, ScreenTips and light/dark detection, one copy for the apps that share the ribbon
-for app in folio-writer folio-sheets folio-deliver foliopost folio-reel; do
+for app in folio-writer folio-sheets folio-deliver folio-reel; do
   [ -d "$ROOT/$app" ] || continue
   put "$HERE/shared/keytips.py" "$ROOT/$app/${PKG[$app]}/keytips.py"
   put "$HERE/shared/screentips.py" "$ROOT/$app/${PKG[$app]}/screentips.py"
 done
-for app in folio-sheets folio-deliver foliopost folio-draw folio-chord folio-reel; do
+for app in folio-sheets folio-deliver folio-draw folio-chord folio-reel; do
   [ -d "$ROOT/$app" ] || continue
   put "$HERE/shared/appearance.py" "$ROOT/$app/${PKG[$app]}/appearance.py"
 done

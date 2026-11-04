@@ -1,17 +1,17 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Post, Draw, Gable, Chord, Reel) with the test
+#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Draw, Gable, Chord, Reel, Cork) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
 #   --quick                   Gable's audit without the click-everything pass
-#   --only writer,sheets,deliver,post,draw,gable,chord,reel,cork,suite   a subset
+#   --only writer,sheets,deliver,draw,gable,chord,reel,cork,suite   a subset
 #
-# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $POST_SRC, $DRAW_SRC, $GABLE_SRC, $CHORD_SRC (default
-# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/foliopost, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord, ~/src/folio-reel). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
+# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $DRAW_SRC, $GABLE_SRC, $CHORD_SRC (default
+# ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord, ~/src/folio-reel). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,post,draw,gable,chord,reel,cork,suite"
+SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,draw,gable,chord,reel,cork,suite"
 while [ $# -gt 0 ]; do
   case "$1" in
     --source) SOURCE=1 ;;
@@ -25,7 +25,6 @@ done
 WRITER_SRC="${WRITER_SRC:-$HOME/src/folio-writer}"
 SHEETS_SRC="${SHEETS_SRC:-$HOME/src/folio-sheets}"
 DELIVER_SRC="${DELIVER_SRC:-$HOME/src/folio-deliver}"
-POST_SRC="${POST_SRC:-$HOME/src/foliopost}"
 DRAW_SRC="${DRAW_SRC:-$HOME/src/folio-draw}"
 GABLE_SRC="${GABLE_SRC:-$HOME/src/gable}"
 CHORD_SRC="${CHORD_SRC:-$HOME/src/folio-chord}"
@@ -101,7 +100,7 @@ if want writer; then
   done
 fi
 
-# ---------------------------------------------------------------- Show (formerly Deliver) and Post (UI scripts print ok / FAIL lines)
+# ---------------------------------------------------------------- Show (formerly Deliver) (UI scripts print ok / FAIL lines)
 ui_app() {  # label, runner script, test dir, scripts...
   local label="$1" runner="$2" dir="$3"; shift 3
   for u in "$@"; do
@@ -117,10 +116,6 @@ ui_app() {  # label, runner script, test dir, scripts...
 if want deliver; then
   if [ $SOURCE = 1 ]; then R="$DELIVER_SRC/tests/run_ui.sh"; else R="$DELIVER_SRC/tests/run_installed.sh"; fi
   ui_app Show "$R" "$DELIVER_SRC/tests" ui_basic.py ui_more.py ui_anim.py ui_review.py ui_master.py ui_show2.py ui_objects.py ui_media.py ui_theme.py
-fi
-if want post; then
-  if [ $SOURCE = 1 ]; then R="$POST_SRC/tests/run_ui.sh"; else R="$POST_SRC/tests/run_installed.sh"; fi
-  ui_app Post "$R" "$POST_SRC/tests" ui_mail.py ui_editor.py ui_writered.py ui_attach.py ui_calendar.py ui_people.py ui_tasks.py ui_folders.py ui_pgp.py ui_smime.py
 fi
 
 if want chord; then
