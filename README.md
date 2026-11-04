@@ -2,7 +2,7 @@
 
 Folio Studio (formerly Folio Suite) is the eight Folio apps together: Folio Page (word processor,
 formerly Writer), Folio Sheet (spreadsheet, formerly Sheets), Folio Show (presentations, formerly
-Deliver), Folio Post (mail and calendar), Folio Draw (pictures and embroidery), Folio Gable (3D
+Deliver), Folio Draw (pictures and embroidery), Folio Gable (3D
 modelling), Folio Chord (music, internet radio and podcasts), Folio Reel (video editing) and Folio Cork
 (diagrams, whiteboards and mood boards). This repository holds what spans the
 apps: the installer and its signed apt repository, one command for every app's tests, and the code the apps share.
@@ -20,6 +20,10 @@ An existing Folio Suite install is moved over: the old repository and key are re
 old package names (folio-suite, folio-writer, folio-sheets, folio-deliver) become transitional
 packages, so the old commands keep working.
 
+Folio Post is discontinued (Studio 1.11.0). The installer removes it, and the package source carries an empty
+folio-post that replaces it on machines that only update through the Software Updater. Mail and
+settings in the home folder are left alone.
+
 The installer installs from its own copy of the packages (so it works offline), then points apt at
 the online package source, https://akeilan.github.io/FolioStudio/ (GitHub Pages, `gh-pages`
 branch). From then on new versions arrive through the Software Updater. If that address can't be
@@ -35,7 +39,7 @@ tests/machines.sh           # run-tests.sh on every release test machine (22.04,
 tests/wl.sh CMD...          # run a test as a Wayland client (Weston inside the Xvfb)
 ```
 
-Set `WRITER_SRC`, `SHEETS_SRC`, `DELIVER_SRC`, `POST_SRC`, `DRAW_SRC` and `GABLE_SRC` if the
+Set `WRITER_SRC`, `SHEETS_SRC`, `DELIVER_SRC`, `DRAW_SRC` and `GABLE_SRC` if the
 sources aren't in `~/src`. A summary table lists every test file with its number of checks and
 failures; the exit code is 0 only when all passed.
 

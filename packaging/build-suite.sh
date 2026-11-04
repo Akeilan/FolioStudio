@@ -1,6 +1,6 @@
 #!/bin/bash
 # Builds the Folio Studio installer (formerly Folio Suite): one file that installs Page, Sheet,
-# Show, Post, Draw, Gable, Chord, Reel and Cork through a local apt repository, so later versions arrive
+# Show, Draw, Gable, Chord, Reel and Cork through a local apt repository, so later versions arrive
 # through the normal Software Updater.
 #
 #   packaging/build-suite.sh <folder with the app .debs> [output folder]
@@ -32,7 +32,7 @@ newest() {   # newest .deb of a package in $DEBS
 REPO="$WORK/payload/repo"
 mkdir -p "$REPO"
 DEPENDS=()
-for p in folio-page folio-sheet folio-show folio-post folio-draw folio-gable folio-chord folio-reel folio-cork; do
+for p in folio-page folio-sheet folio-show folio-draw folio-gable folio-chord folio-reel folio-cork; do
   f="$(newest $p)"
   [ -n "$f" ] || { echo "missing $p in $DEBS" >&2; exit 1; }
   cp "$f" "$REPO/"
@@ -72,12 +72,26 @@ SH
 DEP="$(IFS=,; echo "${DEPENDS[*]}" | sed 's/,/, /g')"
 meta folio-studio "$DEP" \
   "Breaks: folio-suite (<< $VERSION)" \
-  "Description: Folio Studio: Page, Sheet, Show, Post, Draw, Gable, Chord, Reel and Cork" \
+  "Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord, Reel and Cork" \
   " Installs the Folio apps together: Folio Page (word processor), Folio Sheet" \
-  " (spreadsheet), Folio Show (presentations), Folio Post (mail), Folio Draw" \
-  " (pictures), Folio Gable (3D modelling), Folio Chord (music, radio and" \
-  " podcasts) and Folio Reel (video editing). Updates come from the Folio" \
-  " Studio package source through the normal Software Updater."
+  " (spreadsheet), Folio Show (presentations), Folio Draw (pictures), Folio" \
+  " Gable (3D modelling), Folio Chord (music, radio and podcasts), Folio Reel" \
+  " (video editing) and Folio Cork (diagrams and boards). Updates come from the" \
+  " Folio Studio package source through the normal Software Updater."
+# Folio Post is discontinued (Studio 1.11.0): an empty folio-post takes the app off machines
+# that only get updates through the Software Updater. Mail kept on the computer stays.
+POSTV=0.7.0
+P="$WORK/post-gone"
+mkdir -p "$P/DEBIAN" "$P/usr/share/doc/folio-post"
+printf '%s\n' "Package: folio-post" "Version: $POSTV" "Section: oldlibs" "Priority: optional" "Architecture: all" \
+  "Maintainer: Ron Shillings <ron.shillings@gmail.com>" \
+  "Description: Folio Post has been discontinued" \
+  " Folio Post is no longer part of Folio Studio. This empty package replaces it;" \
+  " it can be removed safely. Mail and settings kept on the computer are left alone." > "$P/DEBIAN/control"
+echo "Folio Post has been discontinued and is no longer part of Folio Studio." > "$P/usr/share/doc/folio-post/README"
+dpkg-deb --root-owner-group --build -Zxz "$P" "$REPO/folio-post_${POSTV}_all.deb" >/dev/null
+echo "  folio-post_${POSTV}_all.deb (discontinued)"
+
 meta folio-suite "folio-studio (>= $VERSION)" "Description: transitional package: Folio Suite is now Folio Studio" \
   " This package can be removed safely."
 
