@@ -73,6 +73,13 @@ counts() {
     n=$(echo "$out" | grep -oE 'test result: [a-zA-Z]+\. [0-9]+ passed; [0-9]+ failed' | awk '{s+=$4; t+=$6} END {if (NR) print s, t}')
     f=${n#* }; n=${n% *}
   fi
+  # No summary line: count the PASS/FAIL lines themselves. A test that exits with os._exit()
+  # can lose its last lines when stdout is a pipe, and that must not read as an error.
+  if [ -z "$n" ]; then
+    local p; p=$(echo "$out" | grep -cE '^PASS ')
+    local q; q=$(echo "$out" | grep -cE '^(FAIL|ERROR) ')
+    if [ "$p" != "0" ] || [ "$q" != "0" ]; then n=$((p + q)); f=$q; fi
+  fi
   echo "${n:-?} ${f:-?}"
 }
 run() {   # name, then the command
