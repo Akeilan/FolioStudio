@@ -45,6 +45,13 @@ if [ -z "$DISPLAY" ]; then
   fi
 fi
 
+# A display that answers: without this every UI test below just says "error" (X4-02).
+if ! xdpyinfo -display "$DISPLAY" >/dev/null 2>&1; then
+  echo "The display $DISPLAY doesn't answer. Inside a test machine, check that /tmp/.X11-unix is" >&2
+  echo "mounted there (mounts.sh) and that an Xvfb is running on it. No tests were run." >&2
+  exit 2
+fi
+
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"; [ -n "$XPID" ] && kill $XPID 2>/dev/null' EXIT
 ROWS=()
