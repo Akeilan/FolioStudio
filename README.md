@@ -49,6 +49,17 @@ failures; the exit code is 0 only when all passed.
 several apps carry. `tools/sync_shared.sh` copies them into the apps; `--check` fails when an app's
 copy differs.
 
+## Testing policy
+
+A release must pass on Linux: Ubuntu 22.04 and 24.04, X11 and Wayland. That is the whole bar, and
+every app's `tools/release.sh` runs exactly that — source tests and the installed package on
+`/srv/jammy`, `/srv/nolo` and `/srv/noble`, then a Wayland pass on 24.04.
+
+Other processors and other operating systems are not part of a release. The portable base keeps the
+door open for them, and the checks for them (other-CPU builds, the Raspberry Pi, the parked Windows
+and macOS work) run only when asked for: `PORTS=1 tools/release.sh`. The suite is developed and used
+on Zorin OS, so Linux is what every release is held to while the apps are still growing.
+
 ## Releases
 
 Each app's release run lives in its repository as `tools/release.sh` (Sheet: `tools/release_installed.sh`
