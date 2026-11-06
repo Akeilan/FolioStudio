@@ -8,7 +8,8 @@
 #   --quick                   Gable's audit without the click-everything pass
 #   --only writer,sheets,deliver,draw,gable,chord,reel,cork,suite   a subset
 #
-# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $DRAW_SRC, $GABLE_SRC, $CHORD_SRC (default
+# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $GABLE_SRC, $CHORD_SRC, $CORK_SRC (Draw
+# lives in the Cork workspace since 1.11.0) (default
 # ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord, ~/src/folio-reel). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,draw,gable,chord,reel,cork,suite"
@@ -25,7 +26,6 @@ done
 WRITER_SRC="${WRITER_SRC:-$HOME/src/folio-writer}"
 SHEETS_SRC="${SHEETS_SRC:-$HOME/src/folio-sheets}"
 DELIVER_SRC="${DELIVER_SRC:-$HOME/src/folio-deliver}"
-DRAW_SRC="${DRAW_SRC:-$HOME/src/folio-draw}"
 GABLE_SRC="${GABLE_SRC:-$HOME/src/gable}"
 CHORD_SRC="${CHORD_SRC:-$HOME/src/folio-chord}"
 REEL_SRC="${REEL_SRC:-$HOME/src/folio-reel}"
@@ -181,16 +181,15 @@ fi
 
 # ---------------------------------------------------------------- Draw
 if want draw; then
+  # Draw is a Rust app since 1.11.0, in the Cork workspace: unit tests from source, and its own
+  # window test (which works on X11 and Wayland, and without a display at all).
   if [ $SOURCE = 1 ]; then
-    run "Draw engine (Rust)" bash -c "cd '$DRAW_SRC/engine' && cargo test --release"
-    DT="$DRAW_SRC"
+    run "Draw unit tests" bash -c "cd '$CORK_SRC' && cargo test -q -p folio-draw -p folio-draw-engine"
+    run "Draw window test" bash -c "cd '$CORK_SRC' && cargo run -q --release -p folio-draw -- --ui-test \"\$(mktemp -d)\""
   else
-    # a copy of the tests alone, so they import the installed app
-    mkdir -p "$WORK/draw"; cp -r "$DRAW_SRC/tests" "$WORK/draw/"; DT="$WORK/draw"
+    run "Draw window test" bash -c 'folio-draw --ui-test "$(mktemp -d)"'
+    run "Draw without a display" bash -c 'folio-draw --ui-test "$(mktemp -d)" --headless'
   fi
-  for t in ui_audit deep_audit dialog_audit tools_audit theme_audit; do
-    run "Draw $t" bash -c "cd '$DT' && AUDIT_OUT='$WORK/draw-out' timeout 900 python3 -u tests/$t.py"
-  done
 fi
 
 # ---------------------------------------------------------------- Gable
@@ -209,7 +208,7 @@ fi
 # ---------------------------------------------------------------- between the apps
 if want suite; then
   if [ $SOURCE = 1 ]; then
-    export GABLE_BIN="$GB" DRAW_PYTHONPATH="$DRAW_SRC" SHEETS_PYTHONPATH="$SHEETS_SRC/app"
+    export GABLE_BIN="$GB" DRAW_BIN="$CORK_SRC/target/release/folio-draw" SHEETS_PYTHONPATH="$SHEETS_SRC/app"
   fi
   out=$(bash "$HERE/tests/clipboard_chain.sh" 2>&1); rc=$?
   n=$(echo "$out" | grep -cE '^  (PASS|FAIL)'); f=$(echo "$out" | grep -cE '^  FAIL')
