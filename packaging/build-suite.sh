@@ -32,7 +32,7 @@ newest() {   # newest .deb of a package in $DEBS
 REPO="$WORK/payload/repo"
 mkdir -p "$REPO"
 DEPENDS=()
-for p in folio-page folio-sheet folio-show folio-draw folio-gable folio-chord folio-reel folio-cork; do
+for p in folio-fonts folio-page folio-sheet folio-show folio-draw folio-gable folio-chord folio-reel folio-cork; do
   f="$(newest $p)"
   [ -n "$f" ] || { echo "missing $p in $DEBS" >&2; exit 1; }
   cp "$f" "$REPO/"
