@@ -64,6 +64,15 @@ if [ "$1" = purge ]; then
 fi
 SH
     chmod 755 "$M/DEBIAN/postrm"
+    # Draw used to be a Python app. Its own package takes its files away on upgrade, but the
+    # cached bytecode it compiled at run time belongs to no package, so clear that up here.
+    cat > "$M/DEBIAN/postinst" <<'SH'
+#!/bin/sh
+set -e
+d=/usr/lib/python3/dist-packages/folio_draw
+if [ -d "$d" ] && [ -z "$(find "$d" -name '*.py' -print -quit)" ]; then rm -rf "$d"; fi
+SH
+    chmod 755 "$M/DEBIAN/postinst"
   fi
   dpkg-deb --root-owner-group --build -Zxz "$M" "$REPO/${name}_${VERSION}_all.deb" >/dev/null
   cp "$REPO/${name}_${VERSION}_all.deb" "$OUT/"
