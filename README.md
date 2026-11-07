@@ -7,9 +7,11 @@ modelling), Folio Chord (music, internet radio and podcasts), Folio Reel (video 
 (diagrams, whiteboards and mood boards). This repository holds what spans the
 apps: the installer and its signed apt repository, one command for every app's tests, and the code the apps share.
 
-Since 1.13.0 every app is a Rust program on the suite's own portable base: no Qt, no GTK, no
-Python, and the same pixels on every machine. Folio Reel is the one that reaches outside itself —
-it hands video to ffmpeg when the computer has it, and says so plainly when it has not.
+Studio 1.13.0 was published on 7 November and withdrawn the same evening. It replaced Page, Sheet,
+Show, Chord, Gable and Reel with the Rust rewrites, and those rewrites are not yet at parity with
+the apps they replaced: Chord shipped with no menu bar at all. The package source is back at
+1.12.5. A rewrite does not take over from a shipping app again until it has been compared against
+that app, feature by feature, and the comparison is written down.
 
 ## Install
 
