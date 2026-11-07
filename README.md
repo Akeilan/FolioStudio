@@ -77,3 +77,9 @@ with `packaging/build-suite.sh <folder of debs> <output folder>`, and published 
 `tools/publish.sh <output folder>`, which replaces the `gh-pages` branch with the new signed
 repository. The signing key lives in `~/.folio-suite-signing` on the release machine; the Product
 Owner keeps a copy (`folio-studio-signing-key.asc`, import with `gpg --import`).
+
+## Licence
+
+MIT — see [LICENSE](LICENSE). Folio Studio is free to use, read, change and pass
+on, including in your own products. The bundled fonts (Carlito, Liberation) are
+under the SIL Open Font License 1.1 and carry their own licences.
