@@ -7,6 +7,10 @@ modelling), Folio Chord (music, internet radio and podcasts), Folio Reel (video 
 (diagrams, whiteboards and mood boards). This repository holds what spans the
 apps: the installer and its signed apt repository, one command for every app's tests, and the code the apps share.
 
+Since 1.13.0 every app is a Rust program on the suite's own portable base: no Qt, no GTK, no
+Python, and the same pixels on every machine. Folio Reel is the one that reaches outside itself —
+it hands video to ffmpeg when the computer has it, and says so plainly when it has not.
+
 ## Install
 
 ```

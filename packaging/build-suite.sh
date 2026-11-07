@@ -64,13 +64,19 @@ if [ "$1" = purge ]; then
 fi
 SH
     chmod 755 "$M/DEBIAN/postrm"
-    # Draw used to be a Python app. Its own package takes its files away on upgrade, but the
-    # cached bytecode it compiled at run time belongs to no package, so clear that up here.
+    # Most of these apps used to be Python. Each package takes its own .py files away on
+    # upgrade, but the bytecode compiled at run time belongs to no package, so it is left
+    # behind. Clear out any of their folders that no longer hold a single .py file; the Rust
+    # packages put nothing under /usr/lib at all, so what is left there is only the leavings.
     cat > "$M/DEBIAN/postinst" <<'SH'
 #!/bin/sh
 set -e
-d=/usr/lib/python3/dist-packages/folio_draw
-if [ -d "$d" ] && [ -z "$(find "$d" -name '*.py' -print -quit)" ]; then rm -rf "$d"; fi
+for d in /usr/lib/python3/dist-packages/folio_draw \
+         /usr/lib/folio-page /usr/lib/folio-sheet /usr/lib/folio-show \
+         /usr/lib/folio-chord /usr/lib/folio-reel /usr/lib/folio-draw \
+         /usr/lib/folio-gable /usr/lib/folio-cork; do
+  if [ -d "$d" ] && [ -z "$(find "$d" -name '*.py' -print -quit)" ]; then rm -rf "$d"; fi
+done
 SH
     chmod 755 "$M/DEBIAN/postinst"
   fi
