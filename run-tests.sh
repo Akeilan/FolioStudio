@@ -145,7 +145,7 @@ if want reel; then
   run "Reel test_engine" env PYTHONPATH="$CP" python3 "$REEL_SRC/tests/test_engine.py"
   if [ $SOURCE = 1 ]; then run "Reel test_cli" env PYTHONPATH="$CP" python3 "$REEL_SRC/tests/test_cli.py"
   else run "Reel test_cli" env PYTHONPATH="$CP" REEL_CMD=/usr/bin/folio-reel python3 "$REEL_SRC/tests/test_cli.py"; fi
-  FOLIO_REEL_AUDIOSRC="audiotestsrc is-live=true freq=500" ui_app Reel "$R" "$REEL_SRC/tests" ui_basic.py ui_record.py ui_theme.py command_walk.py
+  FOLIO_REEL_AUDIOSRC="audiotestsrc is-live=true freq=500" ui_app Reel "$R" "$REEL_SRC/tests" ui_basic.py ui_record.py ui_steady.py ui_theme.py command_walk.py
 fi
 
 if want cork; then
