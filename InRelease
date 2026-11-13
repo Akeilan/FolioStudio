@@ -1,0 +1,23 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Origin: Folio
+Label: Folio Studio
+Suite: stable
+Version: 1.19.0
+Date: Fri, 13 Nov 2026 22:09:24 UTC
+Architectures: amd64 all
+Description: Folio Studio packages
+MD5Sum:
+ 47c2ad9e7505887b04483dd3989b6548 15358 Packages
+ b86d222b86d96fb2fd09730d6eab43cd 5643 Packages.gz
+SHA256:
+ d021fc5cf442c1dd386274dfc76245211852b9e1db22f11ecf851503b2f337c8 15358 Packages
+ 1b4493b0b8b60e6dbfd480a44facb1e407d33aba98142431faa8f6d2516333dd 5643 Packages.gz
+-----BEGIN PGP SIGNATURE-----
+
+iI4EARYKADYWIQSb29wWDCpM9rwIxY5K4E5gzyXFqQUCaveKlBgccm9uLnNoaWxs
+aW5nc0BnbWFpbC5jb20ACgkQSuBOYM8lxakFTAD/Q45qS1MhioSAe4cYud13STB7
+e+ueThIF/zyNcIV93f4A/1J9YTJ2gWhaAdeI6oUBzMrqsK32me53NeCH91kajisC
+=nmih
+-----END PGP SIGNATURE-----
