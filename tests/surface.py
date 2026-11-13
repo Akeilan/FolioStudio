@@ -104,6 +104,18 @@ def collect():
     return out
 
 
+def _action_name(c):
+    """A control's action as words that mean the same thing on every run. An app that binds a
+    function rather than a command name has nothing stable to write down: a function prints with
+    its address, which differs between two runs of the same build and would read as a loss."""
+    act = getattr(c, "action", None)
+    if isinstance(act, str):
+        return act
+    if isinstance(act, (tuple, list)) and act and all(isinstance(a, (str, int, float)) for a in act):
+        return ":".join(str(a) for a in act)
+    return None
+
+
 def _ribbon_lines(win):
     """The ribbon's own account of itself, where an app has one: tabs, groups and controls are
     built before they are ever shown, so walking the tree alone would miss the tabs behind the
@@ -122,12 +134,12 @@ def _ribbon_lines(win):
                 if cap:
                     out.add("ribbon:%s > %s" % (tname, cap))
         for c in getattr(tab, "controls", []) or []:
-            act = getattr(c, "action", None)
+            act = _action_name(c)
             lab = _label_of(c) or act
             if lab:
                 out.add("ribbon:%s > %s%s" % (tname, lab, " [%s]" % act if act else ""))
     for c in getattr(r, "controls", []) or []:
-        act = getattr(c, "action", None)
+        act = _action_name(c)
         lab = _label_of(c) or act
         if lab:
             out.add("control:%s%s" % (lab, " [%s]" % act if act else ""))
