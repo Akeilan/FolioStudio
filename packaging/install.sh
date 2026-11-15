@@ -6,6 +6,10 @@ set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 REPO=/var/lib/folio-studio
 KEY=/usr/share/keyrings/folio-studio-archive-keyring.gpg
+# The on-disk repository gets a keyring of its own. Both held the same key until 1.20.1, so
+# rotating the archive key left the on-disk index unverifiable: apt reported NO_PUBKEY for
+# file:/var/lib/folio-studio on every update.
+LOCAL_KEY=/usr/share/keyrings/folio-studio-local-keyring.gpg
 LIST=/etc/apt/sources.list.d/folio-studio.list
 OLD_REPO=/var/lib/folio-suite
 OLD_KEY=/usr/share/keyrings/folio-suite-archive-keyring.gpg
@@ -15,7 +19,7 @@ if [ "$1" = "--remove" ]; then
            folio-post folio-draw folio-gable folio-chord folio-reel folio-cork; do
     dpkg -s "$p" >/dev/null 2>&1 && apt-get -y purge "$p" || true
   done
-  rm -f "$LIST" "$KEY" "$OLD_LIST" "$OLD_KEY"
+  rm -f "$LIST" "$KEY" "$LOCAL_KEY" "$OLD_LIST" "$OLD_KEY"
   rm -rf /var/lib/folio-studio "$OLD_REPO"
   apt-get update -qq || true
   echo "Folio Studio removed."
@@ -38,23 +42,24 @@ rm -rf "$REPO"
 mv "$REPO.new" "$REPO"
 chmod -R a+rX /var/lib/folio-studio
 install -m 644 "$HERE/folio-studio-archive-keyring.gpg" "$KEY"
+install -m 644 "$HERE/folio-studio-archive-keyring.gpg" "$LOCAL_KEY"
 # the Folio Suite repository this replaces
 if [ -f "$OLD_LIST" ] || [ -d "$OLD_REPO" ]; then
   rm -f "$OLD_LIST" "$OLD_KEY"
   rm -rf "$OLD_REPO"
 fi
 # first this installer's own copy, then (below) the online source
-echo "deb [signed-by=$KEY] file:$REPO ./" > "$LIST"
+echo "deb [signed-by=$LOCAL_KEY] file:$REPO ./" > "$LIST"
 apt-get update -o Dir::Etc::sourcelist="$LIST" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" -qq
 online() {
   [ "$SOURCE" = local ] && return 0
   echo "deb [signed-by=$KEY] $SOURCE ./" > "$LIST"
   if apt-get update --error-on=any -o Dir::Etc::sourcelist="$LIST" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0" -qq; then
-    rm -rf "$REPO"
+    rm -rf "$REPO"; rm -f "$LOCAL_KEY"
     echo "Updates now come from $SOURCE through the Software Updater."
   else
     # offline: keep the local copy as well, so apt still finds what is installed
-    { echo "deb [signed-by=$KEY] $SOURCE ./"; echo "deb [signed-by=$KEY] file:$REPO ./"; } > "$LIST"
+    { echo "deb [signed-by=$KEY] $SOURCE ./"; echo "deb [signed-by=$LOCAL_KEY] file:$REPO ./"; } > "$LIST"
     echo "Couldn't reach $SOURCE now; the Software Updater will use it once you're online." >&2
   fi
 }

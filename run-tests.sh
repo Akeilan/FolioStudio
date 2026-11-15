@@ -210,6 +210,13 @@ if want suite; then
   if [ $SOURCE = 1 ]; then
     export GABLE_BIN="$GB" DRAW_BIN="$CORK_SRC/target/release/folio-draw" SHEETS_PYTHONPATH="$SHEETS_SRC/app"
   fi
+  if [ -n "$(ls -t /home/claude/suite-out/folio-studio-*-installer.run 2>/dev/null | head -1)" ]; then
+    out=$(bash "$HERE/tests/keyring_rotation.sh" 2>&1); rc=$?
+    n=$(echo "$out" | grep -cE '^  (PASS|FAIL)'); f=$(echo "$out" | grep -cE '^  FAIL')
+    [ $rc -ne 0 ] && [ "$f" = "0" ] && f="error"
+    row "Repository keys and source list" "$n" "$f"
+    [ "$f" != "0" ] && echo "$out" | grep FAIL | sed 's/^/  [keyring] /' >&2
+  fi
   out=$(bash "$HERE/tests/clipboard_chain.sh" 2>&1); rc=$?
   n=$(echo "$out" | grep -cE '^  (PASS|FAIL)'); f=$(echo "$out" | grep -cE '^  FAIL')
   [ $rc -ne 0 ] && [ "$f" = "0" ] && f="error"

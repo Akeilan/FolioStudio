@@ -59,7 +59,8 @@ meta() {  # name, depends, description...
 #!/bin/sh
 set -e
 if [ "$1" = purge ]; then
-  rm -f /etc/apt/sources.list.d/folio-studio.list /usr/share/keyrings/folio-studio-archive-keyring.gpg
+  rm -f /etc/apt/sources.list.d/folio-studio.list /usr/share/keyrings/folio-studio-archive-keyring.gpg \
+        /usr/share/keyrings/folio-studio-local-keyring.gpg
   rm -rf /var/lib/folio-studio
 fi
 SH
