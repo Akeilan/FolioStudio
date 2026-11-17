@@ -130,7 +130,7 @@ PY
 mkdir -p "$KEYHOME"; chmod 700 "$KEYHOME"
 export GNUPGHOME="$KEYHOME"
 if ! gpg --batch --list-secret-keys "Folio Suite" >/dev/null 2>&1; then
-  gpg --batch --passphrase '' --quick-gen-key "Folio Suite Archive <folio@localhost>" ed25519 sign never >/dev/null 2>&1
+  gpg --batch --passphrase '' --quick-gen-key "Folio Suite Archive" ed25519 sign never >/dev/null 2>&1
 fi
 gpg --batch --yes --local-user "Folio Suite" --clearsign -o "$REPO/InRelease" "$REPO/Release"
 gpg --batch --yes --local-user "Folio Suite" -abs -o "$REPO/Release.gpg" "$REPO/Release"
