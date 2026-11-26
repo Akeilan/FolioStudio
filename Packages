@@ -23,29 +23,19 @@ Description: music player for music, internet radio and podcasts
  a classic small-player look with skins. No account is needed.
 
 Package: folio-cork
-Version: 0.6.0-1
-Architecture: amd64
+Version: 0.7.0
+Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Installed-Size: 17312
-Depends: libc6 (>= 2.35), libgcc-s1, libx11-6, libx11-xcb1, libxcursor1, libxi6, libxcb1, libxkbcommon0, libxkbcommon-x11-0, libwayland-client0, folio-fonts
-Recommends: cups-client, xdg-utils, fonts-dejavu-core, wl-clipboard
-Suggests: libreoffice-draw
-Filename: ./folio-cork_0.6.0-1_amd64.deb
-Size: 5520176
-MD5sum: 84cca1fac93e00a9c46868a47e144e70
-SHA1: 94682156564d08d60ac71c8c3e90bc2775ddcd1f
-SHA256: f99379840e11269036b60c4488f06dc516e567a429d5df814d764c3cd3e2444d
-Section: graphics
+Filename: ./folio-cork_0.7.0_all.deb
+Size: 952
+MD5sum: fd824f9b2db803cab109948e9b96d12f
+SHA1: 6e67eee559348b67e82433c1be464ceab9d0c6bf
+SHA256: f1a27eafb5b231382d86257bd2e25f8b3b03b0000d5592615f3cc4c50e29d312
+Section: oldlibs
 Priority: optional
-Description: diagrams, whiteboards and mood boards
- Folio Cork draws diagrams and runs whiteboards with a ribbon interface,
- KeyTips and ScreenTips: shapes and stencils (flowchart, network, UML,
- database, floor plan, electrical and electronic symbols), connectors that
- stay glued and route around shapes, sticky notes, pen, frames, voting,
- templates, mood boards with colour palettes picked from pictures, comments,
- layers, automatic layout and org charts from a spreadsheet. Opens and saves
- Visio drawings (.vsdx), exports PNG, SVG and PDF, and lets people on the same
- network work on one board together. Everything stays on this computer.
+Description: Folio Cork has been discontinued
+ Folio Cork is no longer part of Folio Studio. This empty package replaces it;
+ it can be removed safely. Drawings saved on the computer are left alone.
 
 Package: folio-deliver
 Version: 0.12.0
@@ -162,9 +152,9 @@ Architecture: all
 Maintainer: Folio Studio <folio@localhost>
 Filename: ./folio-post_0.7.0_all.deb
 Size: 956
-MD5sum: 59afd97e10e47df1d219b345a9f29d2a
-SHA1: 1c2bc982cbd3c04384050eae2783b8912e350b2e
-SHA256: 2bf54ae241cc58fc9d2051b99aa746ff802290d11a094296e060ff4d0a1f54f0
+MD5sum: 59ed3172904a3afdd035606fac675d18
+SHA1: 20b0f79985ed8de1bed0a7e36a60dcd00714726c
+SHA256: 5a7c3960ef023a9623e9ff31b1b7e71e80dd7badac9fc47673cb8f4b1102e577
 Section: oldlibs
 Priority: optional
 Description: Folio Post has been discontinued
@@ -260,35 +250,35 @@ Description: ribbon presentation program
  lossless: whatever it doesn't understand is saved back untouched.
 
 Package: folio-studio
-Version: 1.26.0
+Version: 1.27.0
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.38.0-1), folio-sheet (>= 0.23.0-1), folio-show (>= 0.12.0), folio-draw (>= 1.14.0), folio-gable (>= 2.8.0-1), folio-chord (>= 0.4.0), folio-reel (>= 0.15.0), folio-cork (>= 0.6.0-1)
-Breaks: folio-suite (<< 1.26.0)
-Filename: ./folio-studio_1.26.0_all.deb
-Size: 3712
-MD5sum: 7a64ec6f3ab1908ec0bc743138c471b9
-SHA1: 981b20dce1ad89d416312777d27d5fdea638a789
-SHA256: 877d00c65fded02be668f80437908bd66ade4d3ab3fa7ccdb0afe1533b824640
+Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.38.0-1), folio-sheet (>= 0.23.0-1), folio-show (>= 0.12.0), folio-draw (>= 1.14.0), folio-gable (>= 2.8.0-1), folio-chord (>= 0.4.0), folio-reel (>= 0.15.0)
+Breaks: folio-suite (<< 1.27.0)
+Filename: ./folio-studio_1.27.0_all.deb
+Size: 3720
+MD5sum: a2dffcc1b5108c092116f81296f2eec7
+SHA1: 162ba8179c8c74ae1df9cfaa5a98153bff6c41e4
+SHA256: da3ea053b801038eea35b4888c3f1072658c3da48e62ef9a8426592dcffc9ab4
 Section: metapackages
 Priority: optional
-Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord, Reel and Cork
+Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord and Reel
  Installs the Folio apps together: Folio Page (word processor), Folio Sheet
  (spreadsheet), Folio Show (presentations), Folio Draw (pictures), Folio
- Gable (3D modelling), Folio Chord (music, radio and podcasts), Folio Reel
- (video editing) and Folio Cork (diagrams and boards). Updates come from the
- Folio Studio package source through the normal Software Updater.
+ Gable (3D modelling), Folio Chord (music, radio and podcasts) and Folio Reel
+ (video editing). Updates come from the Folio Studio package source through
+ the normal Software Updater.
 
 Package: folio-suite
-Version: 1.26.0
+Version: 1.27.0
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-studio (>= 1.26.0)
-Filename: ./folio-suite_1.26.0_all.deb
-Size: 3152
-MD5sum: 103d875d2c57d3fe30b3dceda7e411b0
-SHA1: 84f761cb17d00b7f17e9c1b943a781c0cc08bd92
-SHA256: d2953319053587abfaf52fefb13fecaf3fd956ecf375cc5b65424a09c07204a0
+Depends: folio-studio (>= 1.27.0)
+Filename: ./folio-suite_1.27.0_all.deb
+Size: 3200
+MD5sum: 826ea59e7bceca4934e158d3c96df248
+SHA1: fc3ba7f9c4a3ffd723a6f83aa2115d4026a39b16
+SHA256: 47c5bac0a4b85a6431832bf614b0e1c81381017d5d13bd2c6d59747839345f71
 Section: metapackages
 Priority: optional
 Description: transitional package: Folio Suite is now Folio Studio
