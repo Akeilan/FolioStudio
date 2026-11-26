@@ -1,8 +1,9 @@
 #!/bin/bash
 # Publishes the signed Folio Studio repository (the "site" folder build-suite.sh makes) to the
 # gh-pages branch of the FolioStudio repository, which GitHub Pages serves at
-# https://akeilan.github.io/FolioStudio/. The branch is replaced each time, so it only ever holds
-# the current packages.
+# https://akeilan.github.io/FolioStudio/. Each publish is an ordinary commit on top of the last:
+# the branch's files are replaced by the new ones, so it only ever serves the current packages,
+# and nothing is force-pushed (git keeps an unchanged .deb once, however many publishes carry it).
 #
 #   tools/publish.sh <build output folder>      (the folder holding site/)
 set -euo pipefail
@@ -12,6 +13,9 @@ REMOTE="${FOLIO_STUDIO_PAGES_REMOTE:-https://github.com/Akeilan/FolioStudio}"
 VER="$(awk '/^Version:/ {print $2; exit}' "$SITE/Release")"
 W="$(mktemp -d)"
 trap 'rm -rf "$W"' EXIT
+git clone -q --depth 1 --branch gh-pages "$REMOTE" "$W"
+# the new site in place of the old: every file but git's own goes, then the new ones come in
+find "$W" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 cp -r "$SITE/." "$W/"
 touch "$W/.nojekyll"
 {
@@ -28,11 +32,10 @@ touch "$W/.nojekyll"
   echo "</ul>"
 } > "$W/index.html"
 cd "$W"
-git init -q -b gh-pages
 git add -A
 git -c user.name=Folio -c user.email=folio@localhost commit -qm "Folio Studio $VER packages
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01L7oDhePMuTSzKAPokorihB"
-timeout 900 git push -q -f "$REMOTE" gh-pages:refs/heads/gh-pages
+timeout 900 git push -q "$REMOTE" HEAD:refs/heads/gh-pages
 echo "Published Folio Studio $VER: $(git ls-remote "$REMOTE" gh-pages | cut -c1-12)"

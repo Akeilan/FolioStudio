@@ -77,8 +77,8 @@ the installed package on the release test machines: chroots of Ubuntu 22.04 (`/s
 without LibreOffice (`/srv/nolo`) and 24.04 (`/srv/noble`), each with an Xvfb display, plus a Wayland
 pass on 24.04 through `tests/wl.sh`. `tools/mounts.sh` prepares the chroots. The suite itself is built
 with `packaging/build-suite.sh <folder of debs> <output folder>`, and published with
-`tools/publish.sh <output folder>`, which replaces the `gh-pages` branch with the new signed
-repository. The signing key lives in `~/.folio-suite-signing` on the release machine; the Product
+`tools/publish.sh <output folder>`, which puts the new signed repository on the `gh-pages` branch
+as an ordinary commit (nothing is force-pushed). The signing key lives in `~/.folio-suite-signing` on the release machine; the Product
 Owner keeps a copy (`folio-studio-signing-key.asc`, import with `gpg --import`).
 
 ## Licence
