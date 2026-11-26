@@ -119,7 +119,9 @@ ui_app() {  # label, runner script, test dir, scripts...
   local label="$1" runner="$2" dir="$3"; shift 3
   for u in "$@"; do
     [ -f "$dir/$u" ] || continue
-    out=$(cd "$WORK" && UI_TIMEOUT=600 sh "$runner" "$dir/$u" 2>&1); rc=$?
+    # a command walk tries every command in every state, which takes longer than one test
+    t=600; [ "$u" = command_walk.py ] && t=1500
+    out=$(cd "$WORK" && UI_TIMEOUT=$t sh "$runner" "$dir/$u" 2>&1); rc=$?
     n=$(echo "$out" | grep -cE '^(ok|FAIL) '); f=$(echo "$out" | grep -cE '^FAIL ')
     echo "$out" | grep -q "Traceback" && [ "$f" = "0" ] && f="error"
     [ $rc -ne 0 ] && [ "$f" = "0" ] && f="error"
