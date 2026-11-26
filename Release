@@ -1,0 +1,13 @@
+Origin: Folio
+Label: Folio Studio
+Suite: stable
+Version: 1.26.0
+Date: Wed, 25 Nov 2026 23:04:08 UTC
+Architectures: amd64 all
+Description: Folio Studio packages
+MD5Sum:
+ f4a6f57557bf9a26d669bcd7bc471668 15350 Packages
+ 08d622efecdff4972cd297e68a82c65d 5655 Packages.gz
+SHA256:
+ fe93664ecec105ed08245ad2902c6bdbb796e248c74b22741b81e4adc0066bc3 15350 Packages
+ 3600f6dbc821a946aa9706aba792196ad548f9fd7e3e8fcc23c12c70ad077d5e 5655 Packages.gz
