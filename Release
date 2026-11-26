@@ -1,13 +1,13 @@
 Origin: Folio
 Label: Folio Studio
 Suite: stable
-Version: 1.27.0
-Date: Thu, 26 Nov 2026 09:28:43 UTC
+Version: 1.28.0
+Date: Thu, 26 Nov 2026 15:33:18 UTC
 Architectures: amd64 all
 Description: Folio Studio packages
 MD5Sum:
- b46827ced3b9fec1d0facc7a26f31216 14550 Packages
- aa70b899d048052fcadc37a7da9dbd8a 5352 Packages.gz
+ a7aefc0ab4771c3aded8fec08f4f0455 14566 Packages
+ 2da7325edad2f1c7d9600b50001f843e 5370 Packages.gz
 SHA256:
- 55e71198412213b78f9c024851fa5e21304c2890b4cc246d1419a1ff0eafb6c1 14550 Packages
- 5636debefd6ed64479d3a3475b0e963c886661e9288d3be99e3f9ca86ce3c2cc 5352 Packages.gz
+ 0a15303ca81badc8570063357ffdb5c44ac9929f6dbf0082d7b94c3b6f88f8f1 14566 Packages
+ 0e41db2bd74b51999dfbc0e8893c8e56e82348a93d93d6d610d0fcf79c03709d 5370 Packages.gz
