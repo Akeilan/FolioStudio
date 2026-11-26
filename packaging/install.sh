@@ -82,9 +82,11 @@ for p in folio-suite folio-writer folio-sheets folio-deliver; do
   dpkg -s "$p" >/dev/null 2>&1 && UPGRADE="$UPGRADE $p"
 done
 DEBIAN_FRONTEND=noninteractive apt-get install -y -o APT::Install-Suggests=0 folio-studio $UPGRADE $EXTRA
-# Folio Post is discontinued: take it off (mail and settings in the home folder stay).
-if dpkg -s folio-post >/dev/null 2>&1; then
-  DEBIAN_FRONTEND=noninteractive apt-get -y purge folio-post >/dev/null && echo "Folio Post, which is discontinued, was removed."
-fi
+# Discontinued apps: take them off (what they kept in the home folder stays).
+for gone in "folio-post:Folio Post" "folio-cork:Folio Cork"; do
+  if dpkg -s "${gone%%:*}" >/dev/null 2>&1; then
+    DEBIAN_FRONTEND=noninteractive apt-get -y purge "${gone%%:*}" >/dev/null && echo "${gone#*:}, which is discontinued, was removed."
+  fi
+done
 online
-echo "Folio Studio installed: Page, Sheet, Show, Draw, Gable, Chord, Reel and Cork are in the app menu."
+echo "Folio Studio installed: Page, Sheet, Show, Draw, Gable, Chord and Reel are in the app menu."

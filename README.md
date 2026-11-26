@@ -1,10 +1,11 @@
 # Folio Studio
 
-Folio Studio (formerly Folio Suite) is the eight Folio apps together: Folio Page (word processor,
+Folio Studio (formerly Folio Suite) is the seven Folio apps together: Folio Page (word processor,
 formerly Writer), Folio Sheet (spreadsheet, formerly Sheets), Folio Show (presentations, formerly
-Deliver), Folio Draw (pictures and embroidery), Folio Gable (3D
-modelling), Folio Chord (music, internet radio and podcasts), Folio Reel (video editing) and Folio Cork
-(diagrams, whiteboards and mood boards). This repository holds what spans the
+Deliver), Folio Draw (pictures and embroidery), Folio Gable (3D modelling), Folio Chord (music,
+internet radio and podcasts) and Folio Reel (video editing). Folio Cork (diagrams and boards) was
+discontinued on 26 November 2026 (Studio 1.27.0); its diagrams already in Page, Sheet and Show
+documents stay as pictures. This repository holds what spans the
 apps: the installer and its signed apt repository, one command for every app's tests, and the code the apps share.
 
 Studio 1.13.0 was published on 7 November and withdrawn the same evening. It replaced Page, Sheet,

@@ -1,18 +1,18 @@
 #!/bin/bash
 # One command for every Folio app's tests.
 #
-#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Draw, Gable, Chord, Reel, Cork) with the test
+#   ./run-tests.sh            test the installed apps (Page, Sheet, Show, Draw, Gable, Chord, Reel) with the test
 #                             scripts from their source trees, then copy and paste between them
 #   ./run-tests.sh --source   test the source trees instead (built engines needed), including
 #                             the engines' own unit tests
 #   --quick                   Gable's audit without the click-everything pass
-#   --only writer,sheets,deliver,draw,gable,chord,reel,cork,suite   a subset
+#   --only writer,sheets,deliver,draw,gable,chord,reel,suite   a subset
 #
-# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $GABLE_SRC, $CHORD_SRC, $CORK_SRC (Draw
-# lives in the Cork workspace since 1.11.0) (default
+# Source trees: $WRITER_SRC, $SHEETS_SRC, $DELIVER_SRC, $GABLE_SRC, $CHORD_SRC, $CORK_SRC (Draw's
+# workspace, still named folio-cork) (default
 # ~/src/folio-writer, ~/src/folio-sheets, ~/src/folio-deliver, ~/src/folio-draw, ~/src/gable, ~/src/folio-chord, ~/src/folio-reel). Needs a display; without one an Xvfb is started (sudo apt install xvfb).
 HERE="$(cd "$(dirname "$0")" && pwd)"
-SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,draw,gable,chord,reel,cork,suite"
+SOURCE=0; QUICK=0; ONLY="writer,sheets,deliver,draw,gable,chord,reel,suite"
 while [ $# -gt 0 ]; do
   case "$1" in
     --source) SOURCE=1 ;;
@@ -148,16 +148,6 @@ if want reel; then
   FOLIO_REEL_AUDIOSRC="audiotestsrc is-live=true freq=500" ui_app Reel "$R" "$REEL_SRC/tests" ui_basic.py ui_record.py ui_steady.py ui_scrub.py ui_picture.py ui_sound.py ui_theme.py command_walk.py
 fi
 
-if want cork; then
-  # Cork is a Rust app: unit tests from source, and its own window test (works on X11 and Wayland).
-  if [ $SOURCE = 1 ]; then
-    run "Cork unit tests" bash -c "cd '$CORK_SRC' && cargo test -q"
-    run "Cork window test" bash -c "cd '$CORK_SRC' && cargo run -q -- --ui-test \"\$(mktemp -d)\""
-  else
-    run "Cork window test" bash -c 'folio-cork --ui-test "$(mktemp -d)"'
-  fi
-fi
-
 # ---------------------------------------------------------------- Sheet (formerly Sheets)
 if want sheets; then
   if [ $SOURCE = 1 ]; then
@@ -181,7 +171,7 @@ fi
 
 # ---------------------------------------------------------------- Draw
 if want draw; then
-  # Draw is a Rust app since 1.11.0, in the Cork workspace: unit tests from source, and its own
+  # Draw is a Rust app since 1.11.0, in the folio-cork workspace: unit tests from source, and its own
   # window test (which works on X11 and Wayland, and without a display at all).
   if [ $SOURCE = 1 ]; then
     run "Draw unit tests" bash -c "cd '$CORK_SRC' && cargo test -q -p folio-draw -p folio-draw-engine"
