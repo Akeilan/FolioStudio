@@ -36,6 +36,13 @@ the online package source, https://akeilan.github.io/FolioStudio/ (GitHub Pages,
 branch). From then on new versions arrive through the Software Updater. If that address can't be
 reached at install time, the local copy is kept alongside it until the next run.
 
+## Windows
+
+`windows/` builds all seven apps into one MSI for Windows 10 and 11 (64-bit), on a Windows PC with
+MSYS2: double-click `windows\build.cmd`, then install the MSI from the Desktop and run
+`windows\test.cmd`. See [windows/README.md](windows/README.md). The Windows build is tested by the
+Product Owner on Windows 11; the Linux release runs don't touch it.
+
 ## Tests
 
 ```
@@ -66,7 +73,8 @@ Other processors and other operating systems are not part of a release, and are 
 any port beyond Zorin OS and Linux Mint is a bridge crossed when we get there (Product Owner,
 2026-11-06). The portable base keeps the door open for them — the other-CPU and Raspberry Pi checks
 run when asked for, with `PORTS=1 tools/release.sh`, and no release run touches Windows, macOS or
-wine. The suite is developed and used on Zorin OS, and Linux Mint is the other system it is meant
+wine. The Windows MSI (Studio 1.29.0 on) is the exception the Product Owner asked for: it is built
+and tested on his Windows 11 PC, not here. The suite is developed and used on Zorin OS, and Linux Mint is the other system it is meant
 for; both are Ubuntu-based, so the 22.04 and 24.04 machines are the bar.
 
 ## Releases

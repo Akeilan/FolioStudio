@@ -1,0 +1,17 @@
+# What every Folio app needs set on Windows, read by the launchers (launcher.c) and by
+# test-windows.py. KEY=VALUE; %ROOT% is the installation folder, %NAME% any variable already set.
+PATH=%ROOT%\runtime\bin;%ROOT%\bin;%PATH%
+PYTHONHOME=%ROOT%\runtime
+PYTHONUTF8=1
+PYTHONDONTWRITEBYTECODE=1
+PYTHONNOUSERSITE=1
+GI_TYPELIB_PATH=%ROOT%\runtime\lib\girepository-1.0
+GST_PLUGIN_SYSTEM_PATH_1_0=%ROOT%\runtime\lib\gstreamer-1.0
+GST_PLUGIN_SYSTEM_PATH=%ROOT%\runtime\lib\gstreamer-1.0
+GDK_PIXBUF_MODULEDIR=%ROOT%\runtime\lib\gdk-pixbuf-2.0\2.10.0\loaders
+XDG_DATA_DIRS=%ROOT%\share;%ROOT%\runtime\share
+QT_PLUGIN_PATH=%ROOT%\runtime\share\qt6\plugins
+FOLIO_FONT_DIRS=%ROOT%\share\folio\fonts;%ROOT%\share\folio-page\fonts
+FOLIO_HYPHEN_DIRS=%ROOT%\share\hyphen
+PYENCHANT_LIBRARY_PATH=%ROOT%\runtime\bin\libenchant-2.dll
+ENCHANT_CONFIG_DIR=%LOCALAPPDATA%\Folio Studio\enchant
