@@ -27,10 +27,10 @@ Version: 0.7.0
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
 Filename: ./folio-cork_0.7.0_all.deb
-Size: 944
-MD5sum: cf8ebeaff161fc064813b0b9fccf141a
-SHA1: db19c884de48e2144ec045d23bd5a822f62c8cff
-SHA256: c2381c9577f3614a46a072deecd3a1180faf9ab70eda8ceea4bb37e0c6857581
+Size: 948
+MD5sum: 474c4950d1f85ee645c7930705aecbff
+SHA1: f4dea0a8c77da5509c3b0f4418f7161b030749ca
+SHA256: c6250d42af2775b282ac14c5262594d01bc5930a2d1ebf48d567c62b43d3abce
 Section: oldlibs
 Priority: optional
 Description: Folio Cork has been discontinued
@@ -54,17 +54,17 @@ Description: transitional package for Folio Show
  installations over to folio-show and can be removed afterwards.
 
 Package: folio-draw
-Version: 1.15.0
+Version: 1.15.1
 Architecture: amd64
 Maintainer: Folio Studio <folio@localhost>
 Installed-Size: 15572
 Depends: libc6 (>= 2.35), libgcc-s1, libx11-6, libx11-xcb1, libxcursor1, libxi6, libxcb1, libxkbcommon0, libxkbcommon-x11-0, libwayland-client0, folio-fonts
 Recommends: cups-client, xdg-utils, fonts-dejavu-core, wl-clipboard, xclip, sane-utils, ffmpeg
-Filename: ./folio-draw_1.15.0_amd64.deb
-Size: 4972928
-MD5sum: 5e32ab29bcf78ce0e268aa6fc4ac6088
-SHA1: 469d207c6f3060824b2e87b4f1017f3ee87028b8
-SHA256: 7e4e984f4af9f9e9cdcad9980f73c98dc1cb7094e4d25c88e7a6cdb318d3c357
+Filename: ./folio-draw_1.15.1_amd64.deb
+Size: 4974408
+MD5sum: fc34d70c2a8128f28dfea00c24f4d753
+SHA1: dffa4785b38fc1abcf397f310b5764cfafc54e7d
+SHA256: 4729e9ef76677a880aacda4499842511b4f22737e2384daf0936b6e2f92bc84f
 Section: graphics
 Priority: optional
 Description: pictures, with layers and machine embroidery
@@ -100,7 +100,7 @@ Description: the fonts that ship with Folio
  /usr/share/folio/fonts, where the apps look for them.
 
 Package: folio-gable
-Version: 2.10.0
+Version: 2.10.1
 Architecture: amd64
 Maintainer: Folio Studio <folio@localhost>
 Installed-Size: 4112
@@ -108,11 +108,11 @@ Depends: libc6 (>= 2.35), libgcc-s1 (>= 3.0), libglu1-mesa | libglu1, libqt6core
 Recommends: qt6-image-formats-plugins, qt6-wayland
 Conflicts: gable
 Replaces: gable
-Filename: ./folio-gable_2.10.0_amd64.deb
-Size: 1334052
-MD5sum: 6fb9736646309114b4d245002e7d8ea7
-SHA1: b3eff7a06aae32213e5e05cc4705e3445b2a5c6e
-SHA256: 0c930c28c92d5ed6c3712fd4b4fd440f6394dfc7cbac5afa8c93a87ed83e11d6
+Filename: ./folio-gable_2.10.1_amd64.deb
+Size: 1334644
+MD5sum: 92feea2484f3f21019c42bc827c46819
+SHA1: a47ca0382cb16e7ce417631dc713ba07992e25d5
+SHA256: 28dc295dab91b4e362ce4472bdc9cec0399c67b071b34df83a44e4f576b906c5
 Section: graphics
 Priority: optional
 Description: Native 3D modeler with push/pull, inference and components
@@ -125,7 +125,7 @@ Description: Native 3D modeler with push/pull, inference and components
  IFC import, and glTF/GLB and 3MF export.
 
 Package: folio-page
-Version: 2.40.0
+Version: 2.40.1
 Architecture: amd64
 Maintainer: Folio Studio <folio@localhost>
 Installed-Size: 23996
@@ -134,11 +134,11 @@ Recommends: hunspell-en-us | hunspell-dictionary, mythes-en-us, hyphen-en-us, cu
 Suggests: libreoffice-writer
 Breaks: folio-writer (<< 2.33.0)
 Replaces: folio-writer (<< 2.33.0)
-Filename: ./folio-page_2.40.0_amd64.deb
-Size: 7614932
-MD5sum: 1704a158ad91f21e7e233aa6a1683ddc
-SHA1: 4dae7f691e7094c2439e2f544d99a91cdd194642
-SHA256: 5fbdb8326438e48e2e7f33d1c5ab25a9e4cea66d93d518d0ac3148b1e0436676
+Filename: ./folio-page_2.40.1_amd64.deb
+Size: 7615460
+MD5sum: 19f37ce268fdf005d4cde6f169a8300a
+SHA1: 583b40f05e47f7c9a4960e72f0753038693c3f51
+SHA256: 2d338ab6a1f20297b098a528b147925e66ede28a7d04c5b08c851f0d043d9260
 Section: editors
 Priority: optional
 Description: ribbon word processor (formerly Folio Writer)
@@ -152,9 +152,9 @@ Architecture: all
 Maintainer: Folio Studio <folio@localhost>
 Filename: ./folio-post_0.7.0_all.deb
 Size: 956
-MD5sum: 95d40e84e6fbb33f4ac7c9b4b4758fbe
-SHA1: ee2ab92b911bc60f79e39f39a6a3aabab07ca70c
-SHA256: 23a467b47189574a5d71e1c6c78668202c6b0b2da3a96e991049558ce2b6b513
+MD5sum: 6ea18bb0302e1f434d80599f71722867
+SHA1: ad28e2e3c6a1a578cd83567e3e40462cd0cd2495
+SHA256: f88fe425139867311c181e118d78167dc0768eed395c4a9067bab6a6cb88a2cb
 Section: oldlibs
 Priority: optional
 Description: Folio Post has been discontinued
@@ -250,16 +250,16 @@ Description: ribbon presentation program
  lossless: whatever it doesn't understand is saved back untouched.
 
 Package: folio-studio
-Version: 1.29.0
+Version: 1.29.1
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.40.0), folio-sheet (>= 0.24.0), folio-show (>= 0.13.0), folio-draw (>= 1.15.0), folio-gable (>= 2.10.0), folio-chord (>= 0.5.0), folio-reel (>= 0.17.0)
-Breaks: folio-suite (<< 1.29.0)
-Filename: ./folio-studio_1.29.0_all.deb
-Size: 3936
-MD5sum: 6713da544e18712bdcafaaaf0b95ed14
-SHA1: 8ae5c997d516bb20cd88fa7d8e14b6984aeef641
-SHA256: bd1ead8da104302a4a20096e62f7e2adfd04f8649e3cfc7bf6e4c568fd716e9e
+Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.40.1), folio-sheet (>= 0.24.0), folio-show (>= 0.13.0), folio-draw (>= 1.15.1), folio-gable (>= 2.10.1), folio-chord (>= 0.5.0), folio-reel (>= 0.17.0)
+Breaks: folio-suite (<< 1.29.1)
+Filename: ./folio-studio_1.29.1_all.deb
+Size: 3940
+MD5sum: 0b4e8d52d0851b8028599352a24cb736
+SHA1: 520f8f06bb592cf939089ddb4feac7f7c405551e
+SHA256: 67d911251a7f9938c132b45ec0c48757ac5bf173ea66944596861104285e04c8
 Section: metapackages
 Priority: optional
 Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord and Reel
@@ -270,30 +270,30 @@ Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord and Reel
  the normal Software Updater.
 
 Package: folio-suite
-Version: 1.29.0
+Version: 1.29.1
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-studio (>= 1.29.0)
-Filename: ./folio-suite_1.29.0_all.deb
-Size: 3408
-MD5sum: db84087593f1b62bfccdae15289128b2
-SHA1: 9dcbc6a3cfcf3305bc0a2713b2c53c182bfebcc8
-SHA256: 7fb7647e244063d84f027369af0640feaf80638c5b8b0f32571257e49c4261bc
+Depends: folio-studio (>= 1.29.1)
+Filename: ./folio-suite_1.29.1_all.deb
+Size: 3412
+MD5sum: 462350e8b6701b62e60a7eb4d6dea420
+SHA1: 6470090a3bb47b7195ca640687637a5f6de156b6
+SHA256: 6e1db718f595a1ea658cda913769a523312e031d55098899b44539e1389973fc
 Section: metapackages
 Priority: optional
 Description: transitional package: Folio Suite is now Folio Studio
  This package can be removed safely.
 
 Package: folio-writer
-Version: 2.40.0
+Version: 2.40.1
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-page (>= 2.40.0)
-Filename: ./folio-writer_2.40.0_all.deb
+Depends: folio-page (>= 2.40.1)
+Filename: ./folio-writer_2.40.1_all.deb
 Size: 1624
-MD5sum: 854fcc99a0ae83c94ac1b448329f9f59
-SHA1: 827c6473cc04bf79def0d71619505b496927a3ce
-SHA256: 8ff4864e823514afaec3af62c40fe90794c8a73bb12be9f6f90637a266edca3e
+MD5sum: 6778b0bae26338821fb59bffcf354574
+SHA1: f98374d809c974d7eb6d33b8d08e96621e8950a4
+SHA256: c970ec5db8c4ca6b499fd0d093322fbcb962777fb2caac96411af60ae7bf8816
 Section: oldlibs
 Priority: optional
 Description: transitional package: Folio Writer is now Folio Page
