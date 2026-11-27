@@ -203,14 +203,25 @@ def main():
     lines += ["", summary]
     for name, text in DETAILS:
         lines += ["", "---- " + name, text]
-    report = os.path.join(os.path.expanduser("~"), "Desktop", "folio-test-report.txt")
-    if not os.path.isdir(os.path.dirname(report)):
-        report = os.path.join(os.path.expanduser("~"), "folio-test-report.txt")
+    report = os.path.join(_desktop(), "folio-test-report.txt")
     with open(report, "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     print("\n" + summary)
     print("The report is in %s" % report)
     return 0 if not failed else 1
+
+
+def _desktop():
+    """The Desktop as Explorer shows it (with OneDrive it isn't %USERPROFILE%\\Desktop)."""
+    try:
+        import ctypes
+        buf = ctypes.create_unicode_buffer(260)
+        if ctypes.windll.shell32.SHGetFolderPathW(None, 0x10, None, 0, buf) == 0 and os.path.isdir(buf.value):
+            return buf.value
+    except (OSError, AttributeError):
+        pass
+    d = os.path.join(os.path.expanduser("~"), "Desktop")
+    return d if os.path.isdir(d) else os.path.expanduser("~")
 
 
 def _installed_version():

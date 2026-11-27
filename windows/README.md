@@ -9,10 +9,10 @@ them: Python, GTK, GStreamer, Qt and ffmpeg, taken from MSYS2's packages.
 1. Install MSYS2 from https://www.msys2.org. Keep the usual folder, `C:\msys64`.
 2. Double-click `windows\build.cmd` in this checkout of Folio Studio.
 
-The script fetches the build tools and the runtime, then the apps' code from GitHub, and builds
-them. The first run downloads a few gigabytes; later runs reuse them. When it finishes,
-`FolioStudio-<version>-x64.msi` is on your Desktop. If something goes wrong, it says what and
-names the log.
+The script updates MSYS2, fetches the build tools and the runtime, then the apps' code from
+GitHub, and builds them. The first run downloads a few gigabytes; later runs reuse them. When it
+finishes, `FolioStudio-<version>-x64.msi` is on your Desktop (the one Explorer shows, OneDrive's
+included). If something goes wrong, it says what and names the log.
 
 ## Installing
 
@@ -33,6 +33,9 @@ leave the mouse and keyboard alone while it runs. `test.cmd --quick` runs a shor
 few minutes.
 
 The results are written to `folio-test-report.txt` on your Desktop. Send that file back.
+
+If an app closes as soon as it starts, it says so and names its log
+(`%LOCALAPPDATA%\Folio Studio\logs\<app>.log`). Send that too.
 
 ## What differs from Linux
 

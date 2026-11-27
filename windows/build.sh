@@ -19,7 +19,13 @@ HERE="$(cd "$(dirname "$0")" && pwd)"
 STUDIO="$(dirname "$HERE")"
 SRC="${FOLIO_SRC:-$HOME/folio-src}"
 WORK="${FOLIO_WORK:-$HOME/folio-build}"
-OUT="${FOLIO_OUT:-$(cygpath -u "$USERPROFILE")/Desktop}"
+# the Desktop as Explorer shows it (OneDrive keeps it elsewhere than %USERPROFILE%\Desktop)
+desktop() {
+  local d
+  d="$(powershell.exe -NoProfile -Command "[Environment]::GetFolderPath('Desktop')" 2>/dev/null | tr -d '\r')"
+  if [ -n "$d" ] && [ -d "$(cygpath -u "$d")" ]; then cygpath -u "$d"; else echo "$(cygpath -u "$USERPROFILE")/Desktop"; fi
+}
+OUT="${FOLIO_OUT:-$(desktop)}"
 VERSION="$(tr -d '[:space:]' < "$STUDIO/VERSION")"
 TREE="$WORK/Folio Studio"
 LOG="$WORK/build.log"
@@ -39,10 +45,12 @@ RUNTIME=("$P-python" "$P-python-gobject" "$P-python-cairo" "$P-python-numpy" "$P
          "$P-gtk3" "$P-adwaita-icon-theme" "$P-librsvg" "$P-gdk-pixbuf2" "$P-poppler"
          "$P-gstreamer" "$P-gst-plugins-base" "$P-gst-plugins-good" "$P-gst-plugins-bad" "$P-gst-plugins-ugly"
          "$P-gst-libav" "$P-gst-editing-services" "$P-gst-python" "$P-ffmpeg"
-         "$P-enchant" "$P-hunspell" "$P-qt6-base" "$P-qt6-svg" "$P-cairo" "$P-pango" "$P-freetype")
+         "$P-enchant" "$P-hunspell" "$P-glib-networking" "$P-ca-certificates" "$P-qt6-base" "$P-qt6-svg" "$P-cairo" "$P-pango" "$P-freetype")
 # wanted, but the apps manage without them (or pip brings them below)
 OPTIONAL=("$P-python-cryptography" "$P-python-mutagen" "$P-python-shapely" "$P-python-pyenchant" "$P-hunspell-en")
 step "MSYS2 packages"
+# MSYS2's package lists, brought up to date (build.cmd has already updated MSYS2 itself)
+quiet pacman -Sy --noconfirm
 missing=()
 for p in "${BUILD[@]}" "${RUNTIME[@]}"; do
   pacman -S --needed --noconfirm "$p" >> "$LOG" 2>&1 || missing+=("$p")
@@ -80,6 +88,14 @@ fetch folio-reel main reel
 # ---------------------------------------------------------------- the engines (Rust, loaded by Python)
 PYO3_PYTHON="$(cygpath -w "$(command -v python)")"
 export PYO3_PYTHON
+# the engines' PyO3 (0.22) knows Python up to 3.13; with a newer one it builds against the stable
+# interface instead, which it has to be told it may do
+pyver="$(python -c 'import sys; print("%d.%d" % sys.version_info[:2])')"
+echo "  Python $pyver"
+if python -c 'import sys; sys.exit(0 if sys.version_info[:2] > (3, 13) else 1)'; then
+  export PYO3_USE_ABI3_FORWARD_COMPATIBILITY=1
+  echo "  (newer than the engines' PyO3 knows: building them against Python's stable interface)"
+fi
 engine() {   # name, source folder, cargo features, the module's name
   step "$1's engine"
   local b="$WORK/engines/$1"

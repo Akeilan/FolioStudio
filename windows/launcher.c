@@ -128,6 +128,14 @@ static int run(void) {
     const wchar_t* py = L"python.exe";
 #else
     const wchar_t* py = L"pythonw.exe";
+    /* where the app's output goes (sitecustomize.py), so a crash leaves something to read */
+    static wchar_t log[MAX_PATH];
+    wchar_t local[MAX_PATH];
+    if (GetEnvironmentVariableW(L"LOCALAPPDATA", local, MAX_PATH)) {
+        _snwprintf(log, MAX_PATH, L"%ls\\Folio Studio\\logs\\%ls.log", local, W(APP_NAME));
+        log[MAX_PATH - 1] = 0;
+        SetEnvironmentVariableW(L"FOLIO_LOG", log);
+    }
 #endif
     _snwprintf(line, 32768, L"\"%ls\\runtime\\bin\\%ls\" -m %ls %ls", root, py, W(APP_PYMOD), args);
 #endif
@@ -146,7 +154,10 @@ static int run(void) {
     }
     wchar_t wd[MAX_PATH];
     DWORD wl = GetCurrentDirectoryW(MAX_PATH, wd);
-    if (!CreateProcessW(NULL, line, NULL, NULL, TRUE, 0, NULL, wl ? wd : NULL, &si, &pi)) {
+    /* started by a window program (folio-reel.exe by Show, say), there is no console to share, and
+       a console program would open a window of its own: CREATE_NO_WINDOW keeps it hidden */
+    DWORD flags = GetConsoleWindow() ? 0 : CREATE_NO_WINDOW;
+    if (!CreateProcessW(NULL, line, NULL, NULL, TRUE, flags, NULL, wl ? wd : NULL, &si, &pi)) {
         wchar_t why[600];
         _snwprintf(why, 600, L"Windows wouldn't start it (error %lu).", GetLastError());
         why[599] = 0;
@@ -158,6 +169,14 @@ static int run(void) {
     DWORD code = 0;
     GetExitCodeProcess(pi.hProcess, &code);
     CloseHandle(pi.hProcess);
+#if !defined(APP_EXE) && !defined(APP_CONSOLE)
+    if (code != 0 && log[0]) {
+        wchar_t msg[1200];
+        _snwprintf(msg, 1200, L"%ls stopped unexpectedly (code %lu).\n\nWhat it reported is in\n%ls", W(APP_NAME), code, log);
+        msg[1199] = 0;
+        MessageBoxW(NULL, msg, W(APP_NAME), MB_ICONERROR | MB_OK);
+    }
+#endif
     return (int)code;
 }
 

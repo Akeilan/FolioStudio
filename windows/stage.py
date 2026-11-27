@@ -88,7 +88,9 @@ def runtime(dest, packages):
         if os.path.isfile(src):
             os.makedirs(os.path.dirname(os.path.join(dest, rel)), exist_ok=True)
             shutil.copy2(src, os.path.join(dest, rel))
-    for d in ("share/mime",) + tuple("lib/%s/site-packages" % v for v in py[-1:]):
+    # share/mime and the certificate bundles are made at install time too (ca-certificates
+    # writes etc/ssl and etc/pki), so they are copied whole
+    for d in ("share/mime", "etc/ssl", "etc/pki") + tuple("lib/%s/site-packages" % v for v in py[-1:]):
         if os.path.isdir(win_prefix + "/" + d):
             shutil.copytree(win_prefix + "/" + d, os.path.join(dest, d), dirs_exist_ok=True,
                             ignore=shutil.ignore_patterns("tests", "test"))
@@ -136,7 +138,15 @@ def msi(tree, out, version):
     def walk(path, rel):
         nonlocal media, used
         body = []
-        for name in sorted(os.listdir(path)):
+        names = sorted(os.listdir(path))
+        # Windows keeps one of two names that differ only in case, and loses the other
+        seen = {}
+        for name in names:
+            if name.lower() in seen:
+                raise SystemExit("%s holds both %s and %s, and Windows can't keep both: rename one"
+                                 % (rel or "the installation folder", seen[name.lower()], name))
+            seen[name.lower()] = name
+        for name in names:
             full = os.path.join(path, name)
             r = (rel + "/" + name) if rel else name
             if os.path.isdir(full):
