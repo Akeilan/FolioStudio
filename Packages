@@ -28,9 +28,9 @@ Architecture: all
 Maintainer: Folio Studio <folio@localhost>
 Filename: ./folio-cork_0.7.0_all.deb
 Size: 944
-MD5sum: 7eea309025b1a0095b2df21918d11c48
-SHA1: f2c2490d396e01a102718a539a0fd0b89339c8be
-SHA256: 0b611eab7a346daab5fbfb947c3f5e6991bae97ab6aabc9696ad91d2c5f8c753
+MD5sum: be55933e7529a07479f64f9c43ec14c0
+SHA1: ff8084587ee89e278168cd6488d2ee1f175d8a2d
+SHA256: 25b0a012b202a45caf255312c21b00d51738c02b361789f87c609d23b65b2bac
 Section: oldlibs
 Priority: optional
 Description: Folio Cork has been discontinued
@@ -152,9 +152,9 @@ Architecture: all
 Maintainer: Folio Studio <folio@localhost>
 Filename: ./folio-post_0.7.0_all.deb
 Size: 956
-MD5sum: 40cdedcf8ae410a5e200edcdedea260c
-SHA1: ea4ac94c163fdc2fae147e785aed533409c9adc4
-SHA256: a30b775b4d357dfe142d08a739c5f890f9bce7cf8675b129cf415b443c1788aa
+MD5sum: 7c4b3515a20d7e1ee61a9b045b1c0a00
+SHA1: a30947e76dde427d760a114ebc3f3980171aa492
+SHA256: 73f1784545fc1c660da8eb8586fecc62d185cb701cc94d7ae0daffb9f63dbadb
 Section: oldlibs
 Priority: optional
 Description: Folio Post has been discontinued
@@ -162,17 +162,17 @@ Description: Folio Post has been discontinued
  it can be removed safely. Mail and settings kept on the computer are left alone.
 
 Package: folio-reel
-Version: 0.18.0
+Version: 0.18.2
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Installed-Size: 4172
+Installed-Size: 4176
 Depends: python3 (>= 3.10), python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-gstreamer-1.0, gir1.2-gst-plugins-base-1.0, gir1.2-ges-1.0, python3-gst-1.0, python3-numpy, gstreamer1.0-plugins-base, gstreamer1.0-plugins-good, gstreamer1.0-plugins-bad, gstreamer1.0-plugins-ugly, gstreamer1.0-libav, gstreamer1.0-gtk3, gstreamer1.0-x, librsvg2-common, libx11-6, ffmpeg
 Recommends: gstreamer1.0-pulseaudio | gstreamer1.0-pipewire, gstreamer1.0-pipewire, xdg-desktop-portal, xdg-utils
-Filename: ./folio-reel_0.18.0_all.deb
-Size: 2811868
-MD5sum: 9290ea9e56e1e7fa8db05c38773c420f
-SHA1: 1dd8b2702165ce8da522e443bb521f9f619c0d15
-SHA256: 335df6b879d181612f19c6f6cc319cdb680b9384d7e484d84850bf66ef4e165f
+Filename: ./folio-reel_0.18.2_all.deb
+Size: 2812180
+MD5sum: 4068a8efaab3d2f46c6a24b29dbd86cb
+SHA1: f6903bcb4245ed6afe944aaa82768a8991175cb2
+SHA256: f5c56bfa2f4db3830514b40f7f8d704bcb840b7cfe33b9dc097e857760f57301
 Section: video
 Priority: optional
 Description: ribbon video editor
@@ -250,16 +250,16 @@ Description: ribbon presentation program
  lossless: whatever it doesn't understand is saved back untouched.
 
 Package: folio-studio
-Version: 1.29.2
+Version: 1.29.3
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.40.1), folio-sheet (>= 0.24.0), folio-show (>= 0.13.0), folio-draw (>= 1.15.1), folio-gable (>= 2.10.1), folio-chord (>= 0.5.0), folio-reel (>= 0.18.0)
-Breaks: folio-suite (<< 1.29.2)
-Filename: ./folio-studio_1.29.2_all.deb
-Size: 3936
-MD5sum: ea749da20e7e0a66b60446b1551d59ae
-SHA1: 14511f8f94bf297043df93bdb4a0dcb46a63023a
-SHA256: d31d434e9abafa1a91149978b76e12abd71a89c908b9b3d2740e2d0705c9531e
+Depends: folio-fonts (>= 1.0.0-1), folio-page (>= 2.40.1), folio-sheet (>= 0.24.0), folio-show (>= 0.13.0), folio-draw (>= 1.15.1), folio-gable (>= 2.10.1), folio-chord (>= 0.5.0), folio-reel (>= 0.18.2)
+Breaks: folio-suite (<< 1.29.3)
+Filename: ./folio-studio_1.29.3_all.deb
+Size: 3940
+MD5sum: 1eee06e31f87d883b63c826dcd94dd2d
+SHA1: b267d8a64afaaee04036fd03382e0f14cc836cfe
+SHA256: 39fe2db034c4d6269d2968e05b3d42aa53408e6d91d4549c8de1bcca6a0040c1
 Section: metapackages
 Priority: optional
 Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord and Reel
@@ -270,15 +270,15 @@ Description: Folio Studio: Page, Sheet, Show, Draw, Gable, Chord and Reel
  the normal Software Updater.
 
 Package: folio-suite
-Version: 1.29.2
+Version: 1.29.3
 Architecture: all
 Maintainer: Folio Studio <folio@localhost>
-Depends: folio-studio (>= 1.29.2)
-Filename: ./folio-suite_1.29.2_all.deb
-Size: 3412
-MD5sum: 33be61bcf8c67ba448f6b22c58a17877
-SHA1: 21bffdb74f4ffb06bc9e68a23dab22e306f3ff8f
-SHA256: 39cf23a147c57842ca3ed40bb7508491bc5542aef1d1605e0e205369483cbe11
+Depends: folio-studio (>= 1.29.3)
+Filename: ./folio-suite_1.29.3_all.deb
+Size: 3408
+MD5sum: 97598934ff5abb1c6997d001e150fcd2
+SHA1: c979775db907482b201cfc25472b94fae8f1a293
+SHA256: d5ea4c7918d0ed53e21155c6e70e819ffa11dca8dd2e0988b9aa83dc834e23ab
 Section: metapackages
 Priority: optional
 Description: transitional package: Folio Suite is now Folio Studio

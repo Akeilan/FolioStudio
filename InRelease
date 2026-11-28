@@ -4,20 +4,20 @@ Hash: SHA512
 Origin: Folio
 Label: Folio Studio
 Suite: stable
-Version: 1.29.2
-Date: Sat, 28 Nov 2026 03:26:51 UTC
+Version: 1.29.3
+Date: Sat, 28 Nov 2026 17:49:29 UTC
 Architectures: amd64 all
 Description: Folio Studio packages
 MD5Sum:
- cb9a5569a57c66534d549b5c4406d140 14559 Packages
- 12849e5e25a76dbca22d51bf12d0c253 5376 Packages.gz
+ e6c3f8c4202715d9ca925b9161a98bce 14559 Packages
+ cbbecdcaa4a3c01efd03cf25137e8fcf 5373 Packages.gz
 SHA256:
- 0cf43922cc49872ca55b3f3da97177f03349f8513cb21c6a973383385bdadcba 14559 Packages
- 2176c8f1780130d64ac51d31418a9ef93557d2baf10f255a1b71018e1847b0b6 5376 Packages.gz
+ ca3bceff6456441791858fda4bd424b9b26df045062aaead6b8c10106a2da7d2 14559 Packages
+ f0b4c32cef68fc5af5f2fd187daa172ee6d3bd5225190346c15a77dc15210f92 5373 Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQQUT6AZ1f30xrqV6Pz6Yk1ScrB/HQUCawpJ+wAKCRD6Yk1ScrB/
-HXhtAQCXtRM9lGKeI8dXrbJSs+97N4TeUSSUpp9nMyC5MkrB9gEA0oaCXVlde4wV
-fdgA9jCgBo4UHuoz9VSSzCNOvuyWkwE=
-=1IkC
+iHUEARYKAB0WIQQUT6AZ1f30xrqV6Pz6Yk1ScrB/HQUCawsUKQAKCRD6Yk1ScrB/
+HUTqAP48zealZzC5PVKI2NxhT/BEucl/VyXauFPdfWfi0Bu4EAD+MUz+LBhQnxdC
+PX5wgPhhTkwmORiTWy2pa6z3kqdEjwk=
+=wUlV
 -----END PGP SIGNATURE-----
